@@ -41,5 +41,6 @@
 
 ## Maintainer
 
-  https://github.com/CHRIST555
+  [@CHRIST555](https://github.com/CHRIST555).
+
 
