@@ -2,12 +2,15 @@
 ## Network Metrics Visualizer (NMV)
 
 ## Table of Contents
+- [About](#About)
 - [Objectives](#Objectives)
 - [Design](#Design)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [Maintainer](#Maintainer)
+
+## About
 
 ## Objectives
 
