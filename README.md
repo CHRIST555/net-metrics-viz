@@ -41,5 +41,5 @@
 
 ## Maintainer
 
-  @CHRIST555.
+  https://github.com/CHRIST555
 
