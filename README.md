@@ -6,7 +6,8 @@
 - [Design](#Design)
 - [Requirements](#Requirements)
 - [Installation](#Installation)
-
+- [Usage](#Usage)
+- [Maintainer](#Maintainer)
 
 ## Objectives
 
@@ -31,4 +32,14 @@
 
 ## Requirements 
 
+
 ## Installation
+
+## Usage
+
+
+
+## Maintainer
+
+  @CHRIST555.
+
