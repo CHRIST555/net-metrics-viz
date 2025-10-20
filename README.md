@@ -1,2 +1,2 @@
 # net-metrics-viz
-Network Metrics visualizer (NMV)
+Network Metrics Visualizer (NMV)
