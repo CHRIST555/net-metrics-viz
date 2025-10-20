@@ -1,5 +1,5 @@
 # net-metrics-viz
-### Network Metrics Visualizer (NMV)
+## Network Metrics Visualizer (NMV)
 
 ## Table of Contents
 - [Objectives](#Objectives)
@@ -31,7 +31,7 @@
   - Persist configs/data with Docker volumes; expose only needed ports.
 
 ## Requirements 
-  # Functional Requirements 
+  ### Functional Requirements 
   
   - Data Collection
       Collect real-time metrics (throughput, latency, CPU, memory, uptime) via SNMP v2c/v3.
@@ -52,7 +52,7 @@
       Run all services (SNMP exporter, TSDB, alert system, dashboard) in separate Docker containers.
       Deploy on a single VM using Docker Compose with persistent storage volumes.
       
-  # Non-Functional Requirements 
+  ### Non-Functional Requirements 
   
   - Performance: Support at least 10–20 monitored devices concurrently.
   - Reliability: Retry failed SNMP polls automatically.
@@ -61,7 +61,7 @@
   - Maintainability: Configurable thresholds and polling intervals.
   - Portability: Must be easily deployable on any Linux VM via Docker Compose.
 
-  # System Requirements 
+  ### System Requirements 
   
   - OS: Ubuntu 22.04 or equivalent Linux distribution.
   - Hardware: 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
