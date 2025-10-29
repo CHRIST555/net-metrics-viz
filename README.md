@@ -15,7 +15,6 @@
   The Network Metrics Visualizer monitors network devices in real time using SNMP, storing metrics in a time-series database and displaying them on a Grafana dashboard. 
   It detects issues like device downtime, throughput drops, and high latency, sending push notifications for alerts.
   All components run as Docker containers on a single VM, making deployment simple, portable, and easy to manage. 
-  Perfect for network admins, IT teams, or students needing a reliable, lightweight monitoring solution.
 
 ## Objectives
 
