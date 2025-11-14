@@ -1,0 +1,32 @@
+groups:
+  - name: network-alerts
+    rules:
+
+      - alert: DeviceDown
+        expr: up{job="snmp", instance=~".*"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Device {{ $labels.instance }} is down"
+          description: "Prometheus can't scrape SNMP metrics from {{ $labels.instance }} for > 2 minutes."
+
+      - alert: InterfaceThroughputDrop
+        expr: |
+          # example: ifHCInOctets is per-interface — compute 5m rate and alert if below threshold
+          sum by (instance, ifDescr) (rate(ifHCInOctets[5m])) < 1024
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low inbound throughput on {{ $labels.instance }} / {{ $labels.ifDescr }}"
+          description: "Inbound throughput dropped below threshold (1 KB/s) for 5m."
+
+      - alert: HighPingLatency
+        expr: probe_success == 1 and probe_duration_seconds > 0.5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High latency to {{ $labels.instance }}"
+          description: "Ping/blackbox probe latency > 500ms."

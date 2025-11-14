@@ -1,0 +1,21 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'instance']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'team-webhook'
+
+receivers:
+  - name: 'team-webhook'
+    webhook_configs:
+      - url: 'https://example.com/your-webhook-endpoint'  # replace with your endpoint
+        send_resolved: true
+
+  - name: 'slack-notifications'
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/XXXXX/XXXXX/XXXXX'  # replace
+        channel: '#alerts'
+        send_resolved: true
