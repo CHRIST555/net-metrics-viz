@@ -13,47 +13,28 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  # SNMP job: existing network devices
-  - job_name: 'snmp'
+  # SNMP job: test Ubuntu SNMP container
+  - job_name: 'test-monitor-ubuntu'
     scrape_interval: 30s
     metrics_path: /snmp
     params:
-      module: [if_mib]            # which module in snmp.yml to use
+      module: [system]
     static_configs:
-      # Replace these with your devices' IPs
-      - targets: ['10.0.0.10', '10.0.0.11']
+      - targets: ['test-monitor-ubuntu:161']
         labels:
-          device_group: "switches"
+          location: "Test Lab - Rack 12"
+          hostname: "test-monitor-ubuntu"
+          device_group: "network-devices"
     relabel_configs:
-      # send the target IP as the "target" query param to snmp_exporter
       - source_labels: [__address__]
         regex: (.*)
         replacement: ${1}
         target_label: __param_target
-      # the address to actually scrape is the snmp-exporter container
       - target_label: __address__
         replacement: snmp-exporter:9116
-      # set instance label to the actual device IP for dashboards/alerts
       - source_labels: [__param_target]
         target_label: instance
+      - target_label: job
+        replacement: test-monitor-ubuntu
 
-  # SNMP job: test Ubuntu machine
-  - job_name: 'test-ubuntu'
-    scrape_interval: 30s
-    metrics_path: /snmp
-    params:
-      module: [if_mib]
-    static_configs:
-      - targets: ['host.docker.internal:161']   # change if using Linux: <container-ip>:161
-        labels:
-          location: "Data Center A - Rack 12"
-          hostname: "test-ubuntu-01"
-    relabel_configs:
-      - source_labels: [__address__]
-        regex: (.*)
-        replacement: ${1}
-        target_label: __param_target
-      - target_label: __address__
-        replacement: snmp-exporter:9116
-      - source_labels: [__param_target]
-        target_label: instance
+
