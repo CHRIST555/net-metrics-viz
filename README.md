@@ -76,9 +76,21 @@
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Installation
+This application was created in a Windows 11 machine.
+Please install the latest version of Docker-Desktop.
+
+Download the a ZIP verion of this code and extract onto a folder: .\netmetrics-app
+Open Powershell as an Administrator
+Test that Docker is runningDocker : Docker --version
+
+Next
+cd ".\netmetrics-app"
+.\start-monitoring.ps1
+
+At this time users will received confirmation that each image and container have been created.
+and paste each url into a browser in your local machine.
 
 ## Usage
-
 
 
 ## Maintainer
