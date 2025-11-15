@@ -76,48 +76,50 @@
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Installation
-Follow the steps below to install and run the NetMetrics monitoring application on a Windows 11 machine.
 
-Prerequisites
-
+Prerequisites:
 Windows 11
-
-The latest version of Docker Desktop installed and running
-You can verify Docker is running by opening PowerShell and typing:
-
+Docker Desktop (latest version)
+Verify installation by running:
 docker --version
 
-Setup Steps
+Setup Steps:
+Follow the steps below to install and launch the NetMetrics monitoring stack.
 
-Download the Application
-Download the ZIP version of the project and extract it into a folder, for example:
-
+1. Download the Project
+Download the ZIP version of this repository and extract it.
+Example location:
 .\netmetrics-app
 
+2. Open PowerShell as Administrator
+Right-click Start
+Select Windows PowerShell (Admin)
 
-Open PowerShell as Administrator
-Right-click the Start menu → Windows PowerShell (Admin).
-
-Navigate to the Project Folder
-
+3. Navigate to the Project Folder
 cd ".\netmetrics-app"
 
-
-Start the Monitoring Stack
+4. Start the Monitoring Stack
 Run the startup script:
-
 .\start-monitoring.ps1
 
-What Happens Next
+After Startup:
+Once the script finishes:
+All images and containers will be built and started automatically.
+The script will output the URLs for:
+- Grafana
+- Prometheus
+- SNMP Exporter
+- Any additional services (if configured)
 
-The script will automatically build and start all required Docker images and containers.
-
-Once the setup is complete, the script will display the URLs for Grafana, Prometheus, and other components.
-
-Open your web browser and paste each URL to access the monitoring dashboards from your local machine.
+Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
 
 ## Usage
 
+- Collect real-time network metrics via SNMP
+- Store time-series data using Prometheus
+- Visualize performance with Grafana dashboards
+- One-click startup using a PowerShell script
+- Automatically builds all required images and containers
 
 ## Maintainer
 
