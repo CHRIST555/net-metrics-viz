@@ -78,24 +78,24 @@
   
 ## Structure
 
-netmetrics-app/
-    docker-compose.yml
-    Dockerfile-test-monitor-ubuntu
-    start-monitoring.ps1
-    README.md
-    grafana/
-        provisioning/
-            datasources/
-                prometheus.yaml
-                (other datasource configuration files)
-    scripts/
-        net-metrics-viz-dashboard.json
-        (other helper scripts)
-    alertmanager.yml
-    prometheus.yml
-    rules.yml
-    snmp.yml
-    snmpd.conf
+- netmetrics-app/
+    - docker-compose.yml
+    - Dockerfile-test-monitor-ubuntu
+    - start-monitoring.ps1
+    - README.md
+    - grafana/
+        - provisioning/
+            - datasources/
+                - prometheus.yaml
+                - (other datasource configuration files)
+    - scripts/
+        - net-metrics-viz-dashboard.json
+        - (other helper scripts)
+    - alertmanager.yml
+    - prometheus.yml
+    - rules.yml
+    - snmp.yml
+    - snmpd.conf
 
 ## Installation
 
