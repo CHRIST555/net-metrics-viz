@@ -78,6 +78,7 @@
   
 ## Structure
 
+<details> <summary><strong>Click to expand project tree</strong></summary>
 netmetrics-app/
 │
 ├── docker-compose.yml
@@ -100,6 +101,7 @@ netmetrics-app/
 ├── rules.yml
 ├── snmp.yml
 ├── snmpd.conf
+</details>
 
 
 ## Installation
