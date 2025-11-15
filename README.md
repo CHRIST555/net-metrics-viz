@@ -6,6 +6,7 @@
 - [Objectives](#Objectives)
 - [Design](#Design)
 - [Requirements](#Requirements)
+- [Structure](#Structure)
 - [Installation](#Installation)
 - [Usage](#Usage)
 - [Maintainer](#Maintainer)
@@ -75,6 +76,20 @@
   - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
+## Structure
+
+netmetrics-app/
+│
+├── docker-compose.yml
+├── start-monitoring.ps1
+├── config/
+│   ├── prometheus.yml
+│   ├── snmp.yml
+│   └── dashboards/
+│       └── grafana-dashboard.json
+└── README.md
+
+
 ## Installation
 
 Prerequisites:
