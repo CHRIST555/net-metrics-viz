@@ -76,19 +76,45 @@
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Installation
-This application was created in a Windows 11 machine.
-Please install the latest version of Docker-Desktop.
+Follow the steps below to install and run the NetMetrics monitoring application on a Windows 11 machine.
 
-Download the a ZIP verion of this code and extract onto a folder: .\netmetrics-app
-Open Powershell as an Administrator
-Test that Docker is runningDocker : Docker --version
+Prerequisites
 
-Next
+Windows 11
+
+The latest version of Docker Desktop installed and running
+You can verify Docker is running by opening PowerShell and typing:
+
+docker --version
+
+Setup Steps
+
+Download the Application
+Download the ZIP version of the project and extract it into a folder, for example:
+
+.\netmetrics-app
+
+
+Open PowerShell as Administrator
+Right-click the Start menu → Windows PowerShell (Admin).
+
+Navigate to the Project Folder
+
 cd ".\netmetrics-app"
+
+
+Start the Monitoring Stack
+Run the startup script:
+
 .\start-monitoring.ps1
 
-At this time users will received confirmation that each image and container have been created.
-and paste each url into a browser in your local machine.
+What Happens Next
+
+The script will automatically build and start all required Docker images and containers.
+
+Once the setup is complete, the script will display the URLs for Grafana, Prometheus, and other components.
+
+Open your web browser and paste each URL to access the monitoring dashboards from your local machine.
 
 ## Usage
 
