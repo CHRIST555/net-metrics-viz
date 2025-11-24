@@ -114,12 +114,11 @@ Example location:
 path\netmetrics-app
 
 2. Double Click the "start-netmetrics" batch file to start the program
-<img width="729" height="291" alt="image" src="https://github.com/user-attachments/assets/2e32d6a0-23e4-4e26-98d4-8cd882f4e7af" />
+  <img width="729" height="291" alt="image" src="https://github.com/user-attachments/assets/2e32d6a0-23e4-4e26-98d4-8cd882f4e7af" />
 
 3. Start the Monitoring Stack
    Enter 1 to start monitoring the ubuntu docker image in the program.
 
-After Startup:
 Once the script finishes:
 All images and containers will be built and started automatically.
 The script will output the URLs for:
@@ -128,7 +127,18 @@ The script will output the URLs for:
 - SNMP Exporter
 - Any additional services (if configured)
 
+  <img width="888" height="299" alt="image" src="https://github.com/user-attachments/assets/b7c61dec-6120-4585-8e9e-3d619823ef81" />
+
+
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
+
+  <img width="1845" height="393" alt="image" src="https://github.com/user-attachments/assets/46b16ca0-1d90-4902-a76e-da1f98e9eece" />
+  
+  Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+  <img width="1869" height="868" alt="image" src="https://github.com/user-attachments/assets/363e5155-2a6e-4a07-a351-d0a9ac925541" />
+
+
+
 
 ## Usage
 
