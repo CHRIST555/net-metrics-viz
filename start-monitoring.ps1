@@ -1,6 +1,7 @@
 # ===============================================
 #  start-monitoring.ps1
 #  PowerShell script to build and run monitoring stack
+#  Updated: hyperlinks removed for stability
 # ===============================================
 
 Write-Host "=== Building test-monitor-ubuntu Docker image ===" -ForegroundColor Cyan
@@ -17,6 +18,7 @@ $containers = @(
     "grafana", 
     "prometheus", 
     "snmp-exporter", 
+    "snmp-generator",
     "alertmanager"
 )
 
@@ -28,9 +30,21 @@ foreach ($c in $containers) {
 Write-Host "=== Creating Docker volumes (if missing) ===" -ForegroundColor Cyan
 docker volume create prometheus-data | Out-Null
 docker volume create grafana-storage | Out-Null
+docker volume create snmp-volume | Out-Null
 
 Write-Host "=== Creating monitoring network ===" -ForegroundColor Cyan
 docker network create monitoring-net 2>$null | Out-Null
+
+# ----------------------
+# SNMP Generator
+# ----------------------
+Write-Host "=== Generating snmp.yml inside Docker volume ===" -ForegroundColor Cyan
+docker run --rm `
+    -v snmp-volume:/app `
+    -w /app `
+    golang:1.24-alpine `
+    sh -c "cp -r /app-template/* /app && go run generator.go generate -m ./mibs -g ./generator.yml -o ./snmp.yml"
+Write-Host "snmp.yml generated successfully inside volume." -ForegroundColor Green
 
 # ----------------------
 # SNMP Exporter
@@ -40,7 +54,7 @@ docker run -d `
     --name snmp-exporter `
     --network monitoring-net `
     -p 9116:9116 `
-    -v "${PWD}/snmp.yml:/etc/snmp_exporter/snmp.yml:ro" `
+    -v snmp-volume:/etc/snmp_exporter:ro `
     prom/snmp-exporter:latest `
     --config.file=/etc/snmp_exporter/snmp.yml
 
@@ -102,14 +116,12 @@ Write-Host ""
 Write-Host "==============================================="
 Write-Host " Monitoring Stack Started Successfully!"
 Write-Host ""
-Write-Host " Grafana:      http://localhost:3000"
-Write-Host " Prometheus:   http://localhost:9090"
-Write-Host " Alertmanager: http://localhost:9093"
-Write-Host " SNMP Exporter:http://localhost:9116/snmp?module=if_mib&target=<IP>"
+Write-Host " Access your services at:"
+Write-Host "   Grafana:      http://localhost:3000"
+Write-Host "   Prometheus:   http://localhost:9090"
+Write-Host "   Alertmanager: http://localhost:9093"
+Write-Host "   SNMP Exporter:http://localhost:9116/snmp?module=system&target=<IP>"
 Write-Host ""
 Write-Host " To access Test Ubuntu SNMP container:"
 Write-Host "    docker exec -it test-monitor-ubuntu bash"
 Write-Host "==============================================="
-
-
-

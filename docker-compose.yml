@@ -6,23 +6,43 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./rules.yml:/etc/prometheus/rules.yml:ro
-      - ./prometheus-data:/prometheus
+      - prometheus-data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--web.enable-lifecycle"
     ports:
       - "9090:9090"
+    networks:
+      - monitoring-net
     restart: unless-stopped
+
+  snmp-generator:
+    image: golang:1.24-alpine
+    container_name: snmp-generator
+    working_dir: /app
+    volumes:
+      - snmp-volume:/app      # Volume shared with exporter
+      - ./generator:/app-template:ro # Generator source files
+    entrypoint: ["sh", "-c"]
+    command: >
+      "cp -r /app-template/* /app && go run generator.go generate -m ./mibs -g ./generator.yml -o ./snmp.yml"
+    networks:
+      - monitoring-net
+    restart: "no"
 
   snmp-exporter:
     image: prom/snmp-exporter:latest
     container_name: snmp-exporter
     volumes:
-      - ./snmp.yml:/etc/snmp_exporter/snmp.yml:ro
+      - snmp-volume:/etc/snmp_exporter:ro
     command: ["--config.file=/etc/snmp_exporter/snmp.yml"]
     ports:
       - "9116:9116"
+    networks:
+      - monitoring-net
+    depends_on:
+      - snmp-generator
     restart: unless-stopped
 
   grafana:
@@ -31,12 +51,14 @@ services:
     environment:
       - GF_INSTALL_PLUGINS=grafana-piechart-panel
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
       - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
     ports:
       - "3000:3000"
     depends_on:
       - prometheus
+    networks:
+      - monitoring-net
     restart: unless-stopped
 
   alertmanager:
@@ -48,6 +70,8 @@ services:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
     ports:
       - "9093:9093"
+    networks:
+      - monitoring-net
     restart: unless-stopped
 
   monitor-ubuntu:
@@ -58,14 +82,14 @@ services:
     cap_add:
       - NET_RAW
     networks:
-      - default
+      - monitoring-net
     restart: unless-stopped
 
 volumes:
   prometheus-data:
   grafana-storage:
+  snmp-volume: # Volume for generator and exporter
 
 networks:
-  default:
+  monitoring-net:
     driver: bridge
-

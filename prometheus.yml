@@ -1,40 +1,17 @@
-global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
-  external_labels:
-    monitor: "snmp-monitor"
-
-rule_files:
-  - "/etc/prometheus/rules.yml"
-
 scrape_configs:
-  # Prometheus self-scrape
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
-
-  # SNMP job: test Ubuntu SNMP container
-  - job_name: 'test-monitor-ubuntu'
-    scrape_interval: 30s
+  - job_name: 'ubuntu-snmp'
+    scrape_interval: 5s
     metrics_path: /snmp
     params:
-      module: [system]
+      module: [system]        # match module name in snmp.yml
     static_configs:
-      - targets: ['test-monitor-ubuntu:161']
-        labels:
-          location: "Test Lab - Rack 12"
-          hostname: "test-monitor-ubuntu"
-          device_group: "network-devices"
+      - targets:
+          - test-monitor-ubuntu
     relabel_configs:
       - source_labels: [__address__]
-        regex: (.*)
-        replacement: ${1}
         target_label: __param_target
       - target_label: __address__
         replacement: snmp-exporter:9116
       - source_labels: [__param_target]
         target_label: instance
-      - target_label: job
-        replacement: test-monitor-ubuntu
-
-
+        replacement: test-monitor-ubuntu   # <- Add this

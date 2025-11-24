@@ -117,13 +117,10 @@ Example location:
 Right-click Start
 Select Windows PowerShell (Admin)
 
-3. Navigate to the Project Folder 
-e.g cd ".\netmetrics-app"
+3. Navigate to the Project Folder
+cd ".\netmetrics-app"
 
 4. Start the Monitoring Stack
-
-Run  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-Type A
 Run the startup script:
 .\start-monitoring.ps1
 
@@ -147,9 +144,6 @@ Open any local web browser and copy each URL into the browser to access the moni
 - Automatically builds all required images and containers
 
 ## Maintainer
-
-  Notes: Windows SNMP service does NOT support MSFT-MIB by default.
-         Microsoft removed SNMP support in Windows 10/11 unless manually installed (and even then, many Microsoft MIBs are NOT implemented).
 
   [@CHRIST555](https://github.com/CHRIST555).
 
