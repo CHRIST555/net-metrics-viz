@@ -117,10 +117,13 @@ Example location:
 Right-click Start
 Select Windows PowerShell (Admin)
 
-3. Navigate to the Project Folder
-cd ".\netmetrics-app"
+3. Navigate to the Project Folder 
+e.g cd ".\netmetrics-app"
 
 4. Start the Monitoring Stack
+
+Run Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+Type Y
 Run the startup script:
 .\start-monitoring.ps1
 
