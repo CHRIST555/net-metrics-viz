@@ -122,8 +122,8 @@ e.g cd ".\netmetrics-app"
 
 4. Start the Monitoring Stack
 
-Run Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-Type Y
+Run  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+Type A
 Run the startup script:
 .\start-monitoring.ps1
 
