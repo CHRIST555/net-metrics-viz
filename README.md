@@ -111,18 +111,13 @@ Follow the steps below to install and launch the NetMetrics monitoring stack.
 1. Download the Project
 Download the ZIP version of this repository and extract it.
 Example location:
-.\netmetrics-app
+path\netmetrics-app
 
-2. Open PowerShell as Administrator
-Right-click Start
-Select Windows PowerShell (Admin)
+2. Double Click the "start-netmetrics" batch file to start the program
+<img width="729" height="291" alt="image" src="https://github.com/user-attachments/assets/2e32d6a0-23e4-4e26-98d4-8cd882f4e7af" />
 
-3. Navigate to the Project Folder
-cd ".\netmetrics-app"
-
-4. Start the Monitoring Stack
-Run the startup script:
-.\start-monitoring.ps1
+3. Start the Monitoring Stack
+   Enter 1 to start monitoring the ubuntu docker image in the program.
 
 After Startup:
 Once the script finishes:
