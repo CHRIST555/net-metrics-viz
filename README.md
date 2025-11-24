@@ -148,6 +148,9 @@ Open any local web browser and copy each URL into the browser to access the moni
 
 ## Maintainer
 
+  Notes: Windows SNMP service does NOT support MSFT-MIB by default.
+         Microsoft removed SNMP support in Windows 10/11 unless manually installed (and even then, many Microsoft MIBs are NOT implemented).
+
   [@CHRIST555](https://github.com/CHRIST555).
 
 
