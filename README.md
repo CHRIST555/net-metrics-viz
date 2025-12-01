@@ -79,18 +79,18 @@
 ## Structure
 
 netmetrics-app/
-├── docker-compose.yml
-├── prometheus.yml
-├── rules.yml
-├── alertmanager.yml
-├── generator/                # SNMP generator source files
-│   ├── generator.go
-│   ├── generator.yml
-│   └── mibs/                # MIB files if needed
-├── grafana/
-│   └── provisioning/
-│       └── dashboards/
-└── snmp-volume/              # Shared volume (created by Docker)
+- docker-compose.yml
+- prometheus.yml
+- rules.yml
+- alertmanager.yml
+- generator/                # SNMP generator source files
+     - generator.go
+     - generator.yml
+     - mibs/                # MIB files if needed
+- grafana/
+     - provisioning/
+       - dashboards/
+- snmp-volume/              # Shared volume (created by Docker)
 
 ## Installation
 
