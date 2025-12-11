@@ -9,7 +9,7 @@
 - [Structure](#Structure)
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Maintainer](#Maintainer)
+- [Milestones](#Milestones)
 
 ## About
 
@@ -26,6 +26,9 @@
      
 ## Design 
 
+ - One-click startup using a PowerShell script
+ - Automatically build all required images and containers in a single VM.
+   - Docker Desktop creates a Linux VM (using Hyper-V/WSL2 on Windows) to host the Docker Engine.
  - Enable SNMP (v2c or v3) on target devices; note IPs, communities/creds.
  - Containerize a polling stack: SNMP exporter/collector → TSDB (e.g., Prometheus + snmp_exporter).
      Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
@@ -78,24 +81,23 @@
   
 ## Structure
 
-- netmetrics-app/
-    - docker-compose.yml
-    - Dockerfile-test-monitor-ubuntu
-    - start-monitoring.ps1
-    - README.md
-    - grafana/
-        - provisioning/
-            - datasources/
-                - prometheus.yaml
-                - (other datasource configuration files)
-    - scripts/
-        - net-metrics-viz-dashboard.json
-        - (other helper scripts)
-    - alertmanager.yml
-    - prometheus.yml
-    - rules.yml
-    - snmp.yml
-    - snmpd.conf
+netmetrics-app/
+- start-netmetrics.bat      <- Menu interface calling start/stop/status     
+- start-monitoring.ps1      <- Powershell script to start containers
+- stop-monitoring.ps1       <- Powershell script to stop containers
+- docker-compose.yml        <- Stack definitions
+- prometheus.yml            <- Prometheus configuration
+- rules.yml                 <- Prometheus alert rules (optional)
+- alertmanager.yml          <- Alertmanager configuration
+- scripts
+     - snmp-dashboard       <- Dashboard JSON file
+- grafana/                  <- Grafana dashboards/datasources & SSL certificates for HTTPS
+     - provisioning/
+       - datasources/
+         - prometheus.yaml
+       - certs/               
+         - grafana.crt
+         - grafana.key
 
 ## Installation
 
@@ -111,40 +113,57 @@ Follow the steps below to install and launch the NetMetrics monitoring stack.
 1. Download the Project
 Download the ZIP version of this repository and extract it.
 Example location:
-.\netmetrics-app
+path\netmetrics-app
 
-2. Open PowerShell as Administrator
-Right-click Start
-Select Windows PowerShell (Admin)
+2. Run "start-netmetrics" batch file as an administrator.
+   
+   <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
-3. Navigate to the Project Folder
-cd ".\netmetrics-app"
 
 4. Start the Monitoring Stack
-Run the startup script:
-.\start-monitoring.ps1
-
-After Startup:
+   Enter 1 to start monitoring.
+   
 Once the script finishes:
 All images and containers will be built and started automatically.
+
+<img width="1233" height="715" alt="image" src="https://github.com/user-attachments/assets/494d2085-0d23-4f1e-b0dd-c2b09c031ecc" />
+
 The script will output the URLs for:
 - Grafana
 - Prometheus
 - SNMP Exporter
 - Any additional services (if configured)
+  
+<img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
+
 
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
+Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+
+<img width="1911" height="1122" alt="image" src="https://github.com/user-attachments/assets/d7f65397-647b-45a1-9250-3596c6316ada" />
 
 ## Usage
 
 - Collect real-time network metrics via SNMP
 - Store time-series data using Prometheus
 - Visualize performance with Grafana dashboards
-- One-click startup using a PowerShell script
-- Automatically builds all required images and containers
 
-## Maintainer
+## Milestones
+
+  - Deliverables
+    -  All components run in Docker
+    -  Store time-series data in a TSDB
+    -  Dashboard
+    -  GitHub repository
+
+- Outstanding Deliverables
+  - Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
+  - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
+  - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
+  - Configure notifications via Alertmanager → ntfy/webhook
+  
 
   [@CHRIST555](https://github.com/CHRIST555).
 
 
+  
