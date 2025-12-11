@@ -111,6 +111,7 @@ netmetrics-app/
   - Docker Desktop (latest version)
   - Verify installation by running:
     - docker --version
+      
 
   <img width="1112" height="728" alt="image" src="https://github.com/user-attachments/assets/8a2986c8-0747-406c-bcaf-0124c2ca7616" />
 
