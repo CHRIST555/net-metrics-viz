@@ -151,4 +151,16 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
 
   [@CHRIST555](https://github.com/CHRIST555).
 
+- Deliverables
+  -  All components run in Docker
+  -  Store time-series data in a TSDB
+  -  Dashboard
+  -  GitHub repository
 
+- Outstanding Deliverables
+  - Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
+  - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
+  - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
+  - Configure notifications via Alertmanager → ntfy/webhook
+  
+  
