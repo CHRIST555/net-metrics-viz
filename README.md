@@ -79,18 +79,19 @@
 ## Structure
 
 netmetrics-app/
-- docker-compose.yml
-- prometheus.yml
-- rules.yml
-- alertmanager.yml
-- generator/                # SNMP generator source files
-     - generator.go
-     - generator.yml
-     - mibs/                # MIB files if needed
-- grafana/
+- start-netmetrics.bat  <- Menu interface calling start/stop/status     
+- start-monitoring.ps1  <- Powershell script to start containers
+- stop-monitoring.ps1   <- Powershell script to stop containers
+- docker-compose.yml    <- Stack definitions
+- prometheus.yml        <- Prometheus configuration
+- rules.yml             <- Prometheus alert rules (optional)
+- alertmanager.yml      <- Alertmanager configuration
+- grafana/              <- Grafana dashboards/datasources
      - provisioning/
        - dashboards/
-- snmp-volume/              # Shared volume (created by Docker)
+       - certs/               # SSL certificates for HTTPS
+          - grafana.crt
+          - grafana.key
 
 ## Installation
 
