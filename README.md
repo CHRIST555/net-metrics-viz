@@ -9,7 +9,7 @@
 - [Structure](#Structure)
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Maintainer_Notes](#Maintainer_Notes)
+- [Milestones](#Milestones)
 
 ## About
 
@@ -147,7 +147,7 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
 - Store time-series data using Prometheus
 - Visualize performance with Grafana dashboards
 
-## Maintainer_Notes
+## Milestones
 
   - Deliverables
     -  All components run in Docker
