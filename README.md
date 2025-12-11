@@ -69,18 +69,18 @@
   ### Non-Functional Requirements 
   
   - **Performance:** Support at least 10–20 monitored devices concurrently.
-  - Reliability: Retry failed SNMP polls automatically.
-  - Security: Use SNMPv3 for authentication/encryption and HTTPS for dashboards.
-  - Usability: Provide a clean, responsive, and intuitive web interface.
-  - Maintainability: Configurable thresholds and polling intervals.
-  - Portability: Must be easily deployable on any Linux VM via Docker Compose.
+  - **Reliability:** Retry failed SNMP polls automatically.
+  - **Security:** Use SNMPv3 for authentication/encryption and HTTPS for dashboards.
+  - **Usability:** Provide a clean, responsive, and intuitive web interface.
+  - **Maintainability:** Configurable thresholds and polling intervals.
+  - **Portability:** Must be easily deployable on any Linux VM via Docker Compose.
 
   ### System Requirements 
   
-  - OS: Ubuntu 22.04 or equivalent Linux distribution.
-  - Hardware: 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
-  - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
-  - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
+  - **OS:** Ubuntu 22.04 or equivalent Linux distribution.
+  - **Hardware:** 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
+  - **Software:** Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
+  - **Network:** SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Structure
 
