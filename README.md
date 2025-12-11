@@ -26,6 +26,8 @@
      
 ## Design 
 
+ - One-click startup using a PowerShell script
+ - Automatically build all required images and containers
  - Enable SNMP (v2c or v3) on target devices; note IPs, communities/creds.
  - Containerize a polling stack: SNMP exporter/collector → TSDB (e.g., Prometheus + snmp_exporter).
      Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
@@ -144,8 +146,6 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
 - Collect real-time network metrics via SNMP
 - Store time-series data using Prometheus
 - Visualize performance with Grafana dashboards
-- One-click startup using a PowerShell script
-- Automatically builds all required images and containers
 
 ## Maintainer_Notes
 
