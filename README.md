@@ -9,7 +9,7 @@
 - [Structure](#Structure)
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Maintainer](#Maintainer)
+- [Maintainer_Notes](#Maintainer_Notes)
 
 ## About
 
@@ -147,7 +147,7 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
 - One-click startup using a PowerShell script
 - Automatically builds all required images and containers
 
-## Maintainer Notes
+## Maintainer_Notes
 
   - Deliverables
     -  All components run in Docker
