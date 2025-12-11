@@ -149,9 +149,7 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
 
 ## Maintainer
 
-  [@CHRIST555](https://github.com/CHRIST555).
-
-- Deliverables
+  - Deliverables
   -  All components run in Docker
   -  Store time-series data in a TSDB
   -  Dashboard
@@ -163,4 +161,8 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
   - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
   - Configure notifications via Alertmanager → ntfy/webhook
   
+
+  [@CHRIST555](https://github.com/CHRIST555).
+
+
   
