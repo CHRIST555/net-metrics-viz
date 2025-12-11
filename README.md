@@ -71,9 +71,9 @@
 
   ### System Requirements 
   
-  - OS: Ubuntu 22.04 or equivalent Linux distribution.
+  - OS: Windows 11 
   - Hardware: 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
-  - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
+  - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, , Alertmanager.
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Structure
