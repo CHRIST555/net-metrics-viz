@@ -73,15 +73,15 @@
   - **Security:** Use SNMPv3 for authentication/encryption and HTTPS for dashboards.
   - **Usability:** Provide a clean, responsive, and intuitive web interface.
   - **Maintainability:** Configurable thresholds and polling intervals.
-  - **Portability:** Must be easily deployable
-    - on any Linux VM via Docker Compose
-    - on any Windows computer via Docker Desktop.
+  - **Portability:** Must be easily deployable:
+    - Linux VM via Docker Compose.
+    - Windows computer via Docker Desktop.
 
   ### System Requirements 
   
-  - **OS:** Ubuntu 22.04 or equivalent Linux distribution.
+  - **OS:** Windows 11 or Linux distribution.
   - **Hardware:** 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
-  - **Software:** Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
+  - **Software:** Docker, Docker Compose, Prometheus, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
   - **Network:** SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Structure
@@ -106,11 +106,12 @@ netmetrics-app/
 
 ## Installation
 
--Prerequisites:
-  -Windows 11
-  -Docker Desktop (latest version)
-  -Verify installation by running:
-  -docker --version
+- Prerequisites:
+  - Windows 11
+  - Docker Desktop (latest version)
+  - Verify installation by running:
+    - docker --version
+
   <img width="1112" height="728" alt="image" src="https://github.com/user-attachments/assets/8a2986c8-0747-406c-bcaf-0124c2ca7616" />
 
 Setup Steps:
