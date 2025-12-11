@@ -71,31 +71,30 @@
 
   ### System Requirements 
   
-  - OS: Windows 11 
+  - OS: Ubuntu 22.04 or equivalent Linux distribution.
   - Hardware: 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
-  - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, , Alertmanager.
+  - Software: Docker, Docker Compose, Prometheus/InfluxDB, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
   - Network: SNMP access (UDP 161) to all monitored devices; internet access for notifications.
   
 ## Structure
 
-- netmetrics-app/
-    - docker-compose.yml
-    - Dockerfile-test-monitor-ubuntu
-    - start-monitoring.ps1
-    - README.md
-    - grafana/
-        - provisioning/
-            - datasources/
-                - prometheus.yaml
-                - (other datasource configuration files)
-    - scripts/
-        - net-metrics-viz-dashboard.json
-        - (other helper scripts)
-    - alertmanager.yml
-    - prometheus.yml
-    - rules.yml
-    - snmp.yml
-    - snmpd.conf
+netmetrics-app/
+- start-netmetrics.bat      <- Menu interface calling start/stop/status     
+- start-monitoring.ps1      <- Powershell script to start containers
+- stop-monitoring.ps1       <- Powershell script to stop containers
+- docker-compose.yml        <- Stack definitions
+- prometheus.yml            <- Prometheus configuration
+- rules.yml                 <- Prometheus alert rules (optional)
+- alertmanager.yml          <- Alertmanager configuration
+- scripts
+     - snmp-dashboard       <- Dashboard JSON file
+- grafana/                  <- Grafana dashboards/datasources & SSL certificates for HTTPS
+     - provisioning/
+       - datasources/
+         - prometheus.yaml
+       - certs/               
+         - grafana.crt
+         - grafana.key
 
 ## Installation
 
@@ -105,34 +104,39 @@ Docker Desktop (latest version)
 Verify installation by running:
 docker --version
 
-- Setup Steps:
-  Follow the steps below to install and launch the NetMetrics monitoring stack.
+Setup Steps:
+Follow the steps below to install and launch the NetMetrics monitoring stack.
 
-- 1. Download the Project
-    Download the ZIP version of this repository and extract it.
-    Example location:
-    .\netmetrics-app
+1. Download the Project
+Download the ZIP version of this repository and extract it.
+Example location:
+path\netmetrics-app
 
-- 2. Open PowerShell as Administrator
-  Right-click Start
-  Select Windows PowerShell (Admin)
+2. Run "start-netmetrics" batch file as an administrator.
+   
+   <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
-- 3. Navigate to the Project Folder
-  cd ".\netmetrics-app"
 
-- 4. Start the Monitoring Stack Run the startup script:
- .\start-monitoring.ps1
-
-After Startup:
+4. Start the Monitoring Stack
+   Enter 1 to start monitoring.
+   
 Once the script finishes:
 All images and containers will be built and started automatically.
+
+<img width="1233" height="715" alt="image" src="https://github.com/user-attachments/assets/494d2085-0d23-4f1e-b0dd-c2b09c031ecc" />
+
 The script will output the URLs for:
 - Grafana
 - Prometheus
 - SNMP Exporter
 - Any additional services (if configured)
+- 
+<img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
+
 
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
+Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+<img width="1911" height="1122" alt="image" src="https://github.com/user-attachments/assets/d7f65397-647b-45a1-9250-3596c6316ada" />
 
 ## Usage
 
