@@ -105,24 +105,23 @@ Docker Desktop (latest version)
 Verify installation by running:
 docker --version
 
-Setup Steps:
-Follow the steps below to install and launch the NetMetrics monitoring stack.
+- Setup Steps:
+  Follow the steps below to install and launch the NetMetrics monitoring stack.
 
-1. Download the Project
-Download the ZIP version of this repository and extract it.
-Example location:
-.\netmetrics-app
+- 1. Download the Project
+    Download the ZIP version of this repository and extract it.
+    Example location:
+    .\netmetrics-app
 
-2. Open PowerShell as Administrator
-Right-click Start
-Select Windows PowerShell (Admin)
+- 2. Open PowerShell as Administrator
+  Right-click Start
+  Select Windows PowerShell (Admin)
 
-3. Navigate to the Project Folder
-cd ".\netmetrics-app"
+- 3. Navigate to the Project Folder
+  cd ".\netmetrics-app"
 
-4. Start the Monitoring Stack
-Run the startup script:
-.\start-monitoring.ps1
+- 4. Start the Monitoring Stack Run the startup script:
+ .\start-monitoring.ps1
 
 After Startup:
 Once the script finishes:
