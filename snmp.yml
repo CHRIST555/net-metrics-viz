@@ -1,34 +1,66 @@
-# Corrected snmp.yml for SNMP Exporter v0.29.0
 auths:
   public_v2:
     version: 2
     community: public
 
 modules:
+  # Comprehensive Synology monitoring (all MIBs)
   synology:
     walk:
-    - 1.3.6.1.2.1.1.3.0      # sysUpTime
-    - 1.3.6.1.2.1.1.5.0      # sysName
-    - 1.3.6.1.4.1.6574.2.1.1.2    # diskID
-    - 1.3.6.1.4.1.6574.2.1.1.3    # diskModel
-    - 1.3.6.1.4.1.6574.2.1.1.5    # diskStatus
-    - 1.3.6.1.4.1.6574.2.1.1.6    # diskTemperature
-    - 1.3.6.1.4.1.6574.1.1.0      # systemStatus
-    - 1.3.6.1.4.1.6574.1.2.0      # temperature
-    - 1.3.6.1.4.1.6574.1.4.1.0    # cpuFanStatus
-    - 1.3.6.1.4.1.6574.1.4.2.0    # systemFanStatus
+      # Standard System MIBs
+      - 1.3.6.1.2.1.1       # System information (sysUpTime, sysName)
+      - 1.3.6.1.2.1.2.2.1   # Interfaces
+      - 1.3.6.1.2.1.25.2.3  # Host resources storage
       
+      # Synology-specific MIBs (complete OID tree)
+      - 1.3.6.1.4.1.6574.1  # System info (status, temperature, fans)
+      - 1.3.6.1.4.1.6574.2  # Disk info (complete disk table)
+      - 1.3.6.1.4.1.6574.3  # RAID info
+      - 1.3.6.1.4.1.6574.4  # UPS info (if connected)
+      - 1.3.6.1.4.1.6574.5  # Smart disk info
+      - 1.3.6.1.4.1.6574.6  # Service status
+      - 1.3.6.1.4.1.6574.101 # Storage IO
+      - 1.3.6.1.4.1.6574.102 # Space IO
+      - 1.3.6.1.4.1.6574.104 # iSCSI LUN info
+    retries: 2
+    timeout: 15s
+    max_repetitions: 25
+
+  # Specific Disk MIB (focused on disk metrics only)
+  synology_disk:
+    walk:
+      # Specific Synology Disk MIB entries
+      - 1.3.6.1.4.1.6574.2.1.1.2    # diskID
+      - 1.3.6.1.4.1.6574.2.1.1.3    # diskModel
+      - 1.3.6.1.4.1.6574.2.1.1.4    # diskType
+      - 1.3.6.1.4.1.6574.2.1.1.5    # diskStatus
+      - 1.3.6.1.4.1.6574.2.1.1.6    # diskTemperature
+      - 1.3.6.1.4.1.6574.2.1.1.7    # diskRole
+      - 1.3.6.1.4.1.6574.2.1.1.8    # diskRetry
+      - 1.3.6.1.4.1.6574.2.1.1.9    # diskBadSector
+      - 1.3.6.1.4.1.6574.2.1.1.10   # diskIdentifyFail
+      - 1.3.6.1.4.1.6574.2.1.1.11   # diskRemainLife
+      - 1.3.6.1.4.1.6574.2.1.1.12   # diskName
+      - 1.3.6.1.4.1.6574.2.1.1.13   # diskHealthStatus
+    max_repetitions: 25
+    retries: 2
+    timeout: 10s
+
+  # Standard interface MIB (fallback for network monitoring)
   if_mib:
     walk:
-    - 1.3.6.1.2.1.2.2.1.2   # ifDescr
-    - 1.3.6.1.2.1.2.2.1.8   # ifOperStatus
-    - 1.3.6.1.2.1.2.2.1.10  # ifInOctets
-    - 1.3.6.1.2.1.2.2.1.16  # ifOutOctets
-    - 1.3.6.1.2.1.2.2.1.3   # ifType
-    - 1.3.6.1.2.1.2.2.1.5   # ifSpeed
-    - 1.3.6.1.2.1.2.2.1.4   # ifMtu
-    - 1.3.6.1.2.1.31.1.1.1.6  # ifHCInOctets
-    - 1.3.6.1.2.1.31.1.1.1.10 # ifHCOutOctets
-    - 1.3.6.1.2.1.31.1.1.1.15 # ifHighSpeed
-    - 1.3.6.1.2.1.2.1.0     # ifNumber
+      - 1.3.6.1.2.1.1.1        # sysDescr
+      - 1.3.6.1.2.1.1.3        # sysUpTime
+      - 1.3.6.1.2.1.1.5        # sysName
+      - 1.3.6.1.2.1.2.2.1.2    # ifDescr
+      - 1.3.6.1.2.1.2.2.1.10   # ifInOctets
+      - 1.3.6.1.2.1.2.2.1.16   # ifOutOctets
+      - 1.3.6.1.2.1.31.1.1.1.6 # ifHCInOctets
+      - 1.3.6.1.2.1.31.1.1.1.10 # ifHCOutOctets
+      - 1.3.6.1.2.1.25.2.3.1.3  # hrStorageDescr
+      - 1.3.6.1.2.1.25.2.3.1.5  # hrStorageSize
+      - 1.3.6.1.2.1.25.2.3.1.6  # hrStorageUsed
+    retries: 2
+    timeout: 10s
+    max_repetitions: 25
 

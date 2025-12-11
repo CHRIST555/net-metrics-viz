@@ -73,7 +73,7 @@ if %ERRORLEVEL% EQU 0 (
     echo ========================================
     echo.
     echo Quick Access:
-    echo  - Grafana: http://localhost:3000
+    echo  - Grafana: https://localhost:3000
     echo  - Prometheus: http://localhost:9090
     echo.
 ) else (
@@ -108,7 +108,7 @@ echo        NMV Service Access URLs
 echo ===========================================
 echo.
 echo Monitoring Services:
-echo  * Grafana Dashboard:  http://localhost:3000
+echo  * Grafana Dashboard:  https://localhost:3000
 echo    Username: admin / Password: admin
 echo    (Default dashboard includes Synology metrics)
 echo.
@@ -311,7 +311,7 @@ echo  + Hardware Health Monitoring
 echo.
 echo For support or issues:
 echo  - Check container logs via option 5
-echo  - Visit http://localhost:3000 for Grafana dashboard
+echo  - Visit https://localhost:3000 for Grafana dashboard
 echo  - Use option 4 to verify NAS connectivity
 echo.
 echo                Goodbye!

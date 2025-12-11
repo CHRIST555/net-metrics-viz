@@ -12,7 +12,9 @@ alerting:
           - alertmanager:9093
 
 scrape_configs:
-  # Prometheus self-monitoring
+  # -------------------------------------------------------
+  # Self-Monitoring Services
+  # -------------------------------------------------------
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
@@ -22,7 +24,6 @@ scrape_configs:
           device_type: monitoring
           environment: production
 
-  # SNMP Exporter self-monitoring
   - job_name: 'snmp-exporter'
     static_configs:
       - targets: ['snmp-exporter:9116']
@@ -32,63 +33,13 @@ scrape_configs:
           device_type: monitoring
           environment: production
 
-  # Synology NAS - Basic system info (fallback to standard MIBs)
+  # -------------------------------------------------------
+  # Synology NAS - Comprehensive Monitoring
+  # -------------------------------------------------------
+  
+  # Primary Synology metrics (system health, storage, network)
   - job_name: 'synology-system'
     scrape_interval: 30s
-    scrape_timeout: 10s
-    metrics_path: /snmp
-    params:
-      module: [if_mib]
-    static_configs:
-      - targets:
-          - 192.168.1.160
-        labels:
-          device_name: CHRI-NAS-System
-          location: home
-          device_type: NAS
-          vendor: Synology
-          environment: production
-          snmp_module: if_mib_system
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - target_label: __address__
-        replacement: snmp-exporter:9116
-      - source_labels: [__param_target]
-        target_label: instance
-      - source_labels: [__param_target]
-        target_label: snmp_target
-
-  # Synology NAS - Network interfaces
-  - job_name: 'synology-interfaces'
-    scrape_interval: 30s
-    scrape_timeout: 10s
-    metrics_path: /snmp
-    params:
-      module: [if_mib]
-    static_configs:
-      - targets:
-          - 192.168.1.160
-        labels:
-          device_name: CHRI-NAS-Interfaces
-          location: home
-          device_type: NAS
-          vendor: Synology
-          environment: production
-          snmp_module: if_mib
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - target_label: __address__
-        replacement: snmp-exporter:9116
-      - source_labels: [__param_target]
-        target_label: instance
-      - source_labels: [__param_target]
-        target_label: snmp_target
-
-  # Optional: Synology extended metrics
-  - job_name: 'synology-extended'
-    scrape_interval: 60s
     scrape_timeout: 15s
     metrics_path: /snmp
     params:
@@ -97,7 +48,7 @@ scrape_configs:
       - targets:
           - 192.168.1.160
         labels:
-          device_name: CHRI-NAS-Extended
+          device_name: CHRI-NAS-System
           location: home
           device_type: NAS
           vendor: Synology
@@ -113,11 +64,46 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: snmp_target
 
+  # High-frequency network interface monitoring
+  - job_name: 'synology-network'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    static_configs:
+      - targets:
+          - 192.168.1.160
+        labels:
+          device_name: CHRI-NAS-Network
+          location: home
+          device_type: NAS
+          vendor: Synology
+          environment: production
+          snmp_module: if_mib
+          metric_class: network
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_target]
+        target_label: snmp_target
+    # Only scrape if previous job succeeded (optional optimization)
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'if.*'
+        target_label: interface_metric
+        replacement: 'true'
+
   # -------------------------------------------------------
-  # Windows Exporter (192.168.1.161)
+  # Windows Host Monitoring
   # -------------------------------------------------------
   - job_name: 'windows'
     scrape_interval: 15s
+    scrape_timeout: 10s
     static_configs:
       - targets:
           - 192.168.1.161:9182
@@ -125,4 +111,38 @@ scrape_configs:
           device_name: WIN-HOST
           location: home
           device_type: windows
+          os_family: windows
           environment: production
+    # Filter out noisy metrics (optional)
+    metric_relabel_configs:
+      # Keep essential Windows metrics
+      - source_labels: [__name__]
+        regex: '(windows_cpu_time_total|windows_memory_.*|windows_logical_disk_.*|windows_net_.*|windows_system_.*|windows_os_.*|windows_service_.*|up)'
+        action: keep
+      # Drop per-core parking status (reduces noise)
+      - source_labels: [__name__, core]
+        regex: 'windows_cpu_parking_status;.*'
+        action: drop
+
+  # -------------------------------------------------------
+  # Optional: Additional Network Device Discovery
+  # -------------------------------------------------------
+  # Uncomment and configure for router/switch monitoring
+  # - job_name: 'network-devices'
+  #   scrape_interval: 60s
+  #   scrape_timeout: 30s
+  #   metrics_path: /snmp
+  #   params:
+  #     module: [if_mib]
+  #   static_configs:
+  #     - targets:
+  #         - 192.168.1.1    # Router
+  #         - 192.168.1.2    # Switch
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: __param_target
+  #     - target_label: __address__
+  #       replacement: snmp-exporter:9116
+  #     - source_labels: [__param_target]
+  #       target_label: instance
+
