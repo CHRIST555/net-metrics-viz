@@ -23,6 +23,7 @@
   - Store time-series data in a TSDB (e.g., Prometheus or InfluxDB) and visualize it.
   - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
   - Run all components on a single VM, each as a Docker container.
+    - : Docker Desktop creates a Linux VM (using Hyper-V/WSL2 on Windows) to host the Docker Engine.
      
 ## Design 
 
