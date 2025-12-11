@@ -113,10 +113,11 @@ Example location:
 path\netmetrics-app
 
 2. Run "start-netmetrics" batch file as an administrator.
+   
    <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
 
-3. Start the Monitoring Stack
+4. Start the Monitoring Stack
    Enter 1 to start monitoring.
    
 Once the script finishes:
@@ -133,16 +134,9 @@ The script will output the URLs for:
 <img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
 
 
-
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
-
-  <img width="1845" height="393" alt="image" src="https://github.com/user-attachments/assets/46b16ca0-1d90-4902-a76e-da1f98e9eece" />
-  
-  Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
-  <img width="1869" height="868" alt="image" src="https://github.com/user-attachments/assets/363e5155-2a6e-4a07-a351-d0a9ac925541" />
-
-
-
+Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+<img width="1911" height="1122" alt="image" src="https://github.com/user-attachments/assets/d7f65397-647b-45a1-9250-3596c6316ada" />
 
 ## Usage
 
