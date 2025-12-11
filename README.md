@@ -153,14 +153,24 @@ Import the Grafana Json file in the scripts folder to see the "Network Metrics V
   - Deliverables
     -  All components run in Docker
     -  Store time-series data in a TSDB
-    -  Dashboard
+    -  Ingest key OIDs: Synology-specific MIBs (complete OID tree)
+      - 1.3.6.1.4.1.6574.1  # System info (status, temperature, fans)
+      - 1.3.6.1.4.1.6574.2  # Disk info (complete disk table)
+      - 1.3.6.1.4.1.6574.3  # RAID info
+      - 1.3.6.1.4.1.6574.4  # UPS info (if connected)
+      - 1.3.6.1.4.1.6574.5  # Smart disk info
+      - 1.3.6.1.4.1.6574.6  # Service status
+      - 1.3.6.1.4.1.6574.101 # Storage IO
+      - 1.3.6.1.4.1.6574.102 # Space IO
+      - 1.3.6.1.4.1.6574.104 # iSCSI LUN info
+    -  HTTPS Grafana Dashboard
     -  GitHub repository
+    -    - Configure notifications via Alertmanager → Grafana
 
 - Outstanding Deliverables
-  - Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
   - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
   - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
-  - Configure notifications via Alertmanager → ntfy/webhook
+
   
 
   [@CHRIST555](https://github.com/CHRIST555).
