@@ -112,11 +112,11 @@ Download the ZIP version of this repository and extract it.
 Example location:
 path\netmetrics-app
 
-2. Double Click the "start-netmetrics" batch file to start the program
+2. Run "start-netmetrics" batch file as an administrator.
   <img width="729" height="291" alt="image" src="https://github.com/user-attachments/assets/2e32d6a0-23e4-4e26-98d4-8cd882f4e7af" />
 
 3. Start the Monitoring Stack
-   Enter 1 to start monitoring the ubuntu docker image in the program.
+   Enter 1 to start monitoring.
 
 Once the script finishes:
 All images and containers will be built and started automatically.
