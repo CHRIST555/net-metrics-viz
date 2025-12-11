@@ -1,0 +1,34 @@
+# Corrected snmp.yml for SNMP Exporter v0.29.0
+auths:
+  public_v2:
+    version: 2
+    community: public
+
+modules:
+  synology:
+    walk:
+    - 1.3.6.1.2.1.1.3.0      # sysUpTime
+    - 1.3.6.1.2.1.1.5.0      # sysName
+    - 1.3.6.1.4.1.6574.2.1.1.2    # diskID
+    - 1.3.6.1.4.1.6574.2.1.1.3    # diskModel
+    - 1.3.6.1.4.1.6574.2.1.1.5    # diskStatus
+    - 1.3.6.1.4.1.6574.2.1.1.6    # diskTemperature
+    - 1.3.6.1.4.1.6574.1.1.0      # systemStatus
+    - 1.3.6.1.4.1.6574.1.2.0      # temperature
+    - 1.3.6.1.4.1.6574.1.4.1.0    # cpuFanStatus
+    - 1.3.6.1.4.1.6574.1.4.2.0    # systemFanStatus
+      
+  if_mib:
+    walk:
+    - 1.3.6.1.2.1.2.2.1.2   # ifDescr
+    - 1.3.6.1.2.1.2.2.1.8   # ifOperStatus
+    - 1.3.6.1.2.1.2.2.1.10  # ifInOctets
+    - 1.3.6.1.2.1.2.2.1.16  # ifOutOctets
+    - 1.3.6.1.2.1.2.2.1.3   # ifType
+    - 1.3.6.1.2.1.2.2.1.5   # ifSpeed
+    - 1.3.6.1.2.1.2.2.1.4   # ifMtu
+    - 1.3.6.1.2.1.31.1.1.1.6  # ifHCInOctets
+    - 1.3.6.1.2.1.31.1.1.1.10 # ifHCOutOctets
+    - 1.3.6.1.2.1.31.1.1.1.15 # ifHighSpeed
+    - 1.3.6.1.2.1.2.1.0     # ifNumber
+

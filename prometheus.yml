@@ -1,12 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
 scrape_configs:
-  - job_name: 'ubuntu-snmp'
-    scrape_interval: 5s
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          device_name: Prometheus
+          location: docker
+          device_type: monitoring
+          environment: production
+
+  # SNMP Exporter self-monitoring
+  - job_name: 'snmp-exporter'
+    static_configs:
+      - targets: ['snmp-exporter:9116']
+        labels:
+          device_name: SNMP-Exporter
+          location: docker
+          device_type: monitoring
+          environment: production
+
+  # Synology NAS - Basic system info (fallback to standard MIBs)
+  - job_name: 'synology-system'
+    scrape_interval: 30s
+    scrape_timeout: 10s
     metrics_path: /snmp
     params:
-      module: [system]        # match module name in snmp.yml
+      module: [if_mib]
     static_configs:
       - targets:
-          - test-monitor-ubuntu
+          - 192.168.1.160
+        labels:
+          device_name: CHRI-NAS-System
+          location: home
+          device_type: NAS
+          vendor: Synology
+          environment: production
+          snmp_module: if_mib_system
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -14,4 +56,73 @@ scrape_configs:
         replacement: snmp-exporter:9116
       - source_labels: [__param_target]
         target_label: instance
-        replacement: test-monitor-ubuntu   # <- Add this
+      - source_labels: [__param_target]
+        target_label: snmp_target
+
+  # Synology NAS - Network interfaces
+  - job_name: 'synology-interfaces'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    static_configs:
+      - targets:
+          - 192.168.1.160
+        labels:
+          device_name: CHRI-NAS-Interfaces
+          location: home
+          device_type: NAS
+          vendor: Synology
+          environment: production
+          snmp_module: if_mib
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_target]
+        target_label: snmp_target
+
+  # Optional: Synology extended metrics
+  - job_name: 'synology-extended'
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    metrics_path: /snmp
+    params:
+      module: [synology]
+    static_configs:
+      - targets:
+          - 192.168.1.160
+        labels:
+          device_name: CHRI-NAS-Extended
+          location: home
+          device_type: NAS
+          vendor: Synology
+          environment: production
+          snmp_module: synology
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [__param_target]
+        target_label: snmp_target
+
+  # -------------------------------------------------------
+  # Windows Exporter (192.168.1.161)
+  # -------------------------------------------------------
+  - job_name: 'windows'
+    scrape_interval: 15s
+    static_configs:
+      - targets:
+          - 192.168.1.161:9182
+        labels:
+          device_name: WIN-HOST
+          location: home
+          device_type: windows
+          environment: production
