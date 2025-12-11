@@ -30,7 +30,7 @@
  - Automatically build all required images and containers in a single VM.
    - Docker Desktop creates a Linux VM (using Hyper-V/WSL2 on Windows) to host the Docker Engine.
  - Enable SNMP (v2c or v3) on target devices; note IPs, communities/creds.
- - Windows Host uses windows_exporter-0.31.3 Agent for metrics 
+ - Windows Hosts use windows_exporter-0.31.3 Agent for metrics 
      - https://github.com/prometheus-community/windows_exporter/releases 
  - Containerize a polling stack: SNMP exporter/collector → TSDB (e.g., Prometheus + snmp_exporter).
      Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
