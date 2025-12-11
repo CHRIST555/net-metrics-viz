@@ -101,11 +101,12 @@ netmetrics-app/
 
 ## Installation
 
-Prerequisites:
-Windows 11
-Docker Desktop (latest version)
-Verify installation by running:
-docker --version
+-Prerequisites:
+  -Windows 11
+  -Docker Desktop (latest version)
+  -Verify installation by running:
+  -docker --version
+  <img width="1112" height="728" alt="image" src="https://github.com/user-attachments/assets/8a2986c8-0747-406c-bcaf-0124c2ca7616" />
 
 Setup Steps:
 Follow the steps below to install and launch the NetMetrics monitoring stack.
@@ -119,14 +120,13 @@ path\netmetrics-app
    
    <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
-
 4. Start the Monitoring Stack
    Enter 1 to start monitoring.
    
 Once the script finishes:
 All images and containers will be built and started automatically.
 
-<img width="1233" height="715" alt="image" src="https://github.com/user-attachments/assets/494d2085-0d23-4f1e-b0dd-c2b09c031ecc" />
+<img width="1362" height="718" alt="image" src="https://github.com/user-attachments/assets/5a29ee90-8e63-452e-972a-c98313afd2ef" />
 
 The script will output the URLs for:
 - Grafana
@@ -134,13 +134,13 @@ The script will output the URLs for:
 - SNMP Exporter
 - Any additional services (if configured)
   
-<img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
+<img width="984" height="521" alt="image" src="https://github.com/user-attachments/assets/44f5a113-4724-4ead-806c-d56d7140f6bb" />
 
 
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
 Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
 
-<img width="1911" height="1122" alt="image" src="https://github.com/user-attachments/assets/d7f65397-647b-45a1-9250-3596c6316ada" />
+<img width="1901" height="1022" alt="image" src="https://github.com/user-attachments/assets/6c62bc21-4d1f-4d10-8656-a654f0b95f8e" />
 
 ## Usage
 
