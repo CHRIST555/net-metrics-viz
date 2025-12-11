@@ -1,0 +1,171 @@
+{
+  "__inputs": [],
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "type": "row",
+      "title": "Windows Host (WIN-HOST) — 192.168.1.161",
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Host Status",
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ "expr": "up{job=\"windows\", instance=\"192.168.1.161:9182\"}", "refId": "A" }],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"], "values": false },
+            "orientation": "auto",
+            "textMode": "value",
+            "colorMode": "value",
+            "graphMode": "none",
+            "valueMappings": [
+              { 
+                "type": "value", 
+                "options": { 
+                  "0": { "text": "DOWN", "color": "red" }, 
+                  "1": { "text": "UP", "color": "green" } 
+                } 
+              }
+            ]
+          }
+        },
+        {
+          "type": "stat",
+          "title": "Uptime",
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "fieldConfig": { "defaults": { "unit": "d" } },
+          "targets": [{ "expr": "windows_system_up_time_seconds{instance=\"192.168.1.161:9182\"} / 86400", "refId": "A" }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU Usage (%)",
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 5 },
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "targets": [{ "expr": "100 - avg(irate(windows_cpu_time_total{mode=\"idle\", instance=\"192.168.1.161:9182\"}[5m])) by (instance) * 100", "legendFormat": "CPU" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Memory Usage (%)",
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 5 },
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "targets": [{ "expr": "100 - (windows_memory_available_bytes{instance=\"192.168.1.161:9182\"} / windows_cs_physical_memory_bytes{instance=\"192.168.1.161:9182\"} * 100)", "legendFormat": "Used" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Disk Usage per Volume (%)",
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "targets": [{
+            "expr": "100 * (windows_logical_disk_size_bytes{instance=\"192.168.1.161:9182\"} - windows_logical_disk_free_bytes{instance=\"192.168.1.161:9182\"}) / windows_logical_disk_size_bytes{instance=\"192.168.1.161:9182\"}",
+            "legendFormat": "{{volume}}"
+          }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Network Traffic",
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+          "fieldConfig": { "defaults": { "unit": "Bps" } },
+          "targets": [
+            { "expr": "irate(windows_net_bytes_received_total{instance=\"192.168.1.161:9182\"}[5m])", "legendFormat": "↓ {{nic}} RX" },
+            { "expr": "irate(windows_net_bytes_sent_total{instance=\"192.168.1.161:9182\"}[5m])", "legendFormat": "↑ {{nic}} TX" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "Synology NAS (CHRI-NAS-System) — 192.168.1.160",
+      "collapsed": true,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 1 },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "NAS Status",
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 2 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ "expr": "up{job=\"synology-system\", instance=\"192.168.1.160\"}", "refId": "A" }],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "colorMode": "value",
+            "valueMappings": [
+              { 
+                "type": "value", 
+                "options": { 
+                  "0": { "text": "DOWN", "color": "red" }, 
+                  "1": { "text": "UP", "color": "green" } 
+                } 
+              }
+            ]
+          }
+        },
+        {
+          "type": "stat",
+          "title": "Uptime (days)",
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 2 },
+          "fieldConfig": { "defaults": { "unit": "d", "decimals": 1 } },
+          "targets": [{ "expr": "sysUpTime{instance=\"192.168.1.160\"} / 8640000", "refId": "A" }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Network Traffic",
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
+          "fieldConfig": { "defaults": { "unit": "Bps" } },
+          "targets": [
+            { "expr": "irate(ifHCInOctets{instance=\"192.168.1.160\"}[5m])", "legendFormat": "↓ {{ifDescr}} RX" },
+            { "expr": "irate(ifHCOutOctets{instance=\"192.168.1.160\"}[5m])", "legendFormat": "↑ {{ifDescr}} TX" }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "RAM Usage (%)",
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "targets": [{
+            "expr": "100 - 100 * (hrStorageFree{hrStorageDescr=\"RAM\", instance=\"192.168.1.160\"} / hrStorageSize{hrStorageDescr=\"RAM\", instance=\"192.168.1.160\"})",
+            "legendFormat": "RAM Used"
+          }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Volume Usage (%)",
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 13 },
+          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "targets": [{
+            "expr": "100 * (hrStorageSize{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"} - hrStorageFree{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"}) / hrStorageSize{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"}",
+            "legendFormat": "{{hrStorageDescr}}"
+          }]
+        },
+        {
+          "type": "timeseries",
+          "title": "Temperature (°C)",
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 13 },
+          "fieldConfig": { "defaults": { "unit": "celsius" } },
+          "targets": [
+            { "expr": "ssCpuTemperature{instance=\"192.168.1.160\"}", "legendFormat": "CPU Temp" },
+            { "expr": "systemTemperature{instance=\"192.168.1.160\"}", "legendFormat": "System Temp" }
+          ]
+        }
+      ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": ["windows", "synology", "home-lab"],
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
+  "timezone": "",
+  "title": "Network Metrics Visualizer (NMV) Dashboard",
+  "version": 10
+}
+
