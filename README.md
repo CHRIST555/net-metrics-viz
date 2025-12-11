@@ -107,17 +107,16 @@ docker --version
 Setup Steps:
 Follow the steps below to install and launch the NetMetrics monitoring stack.
 
-- 1. Download the Project
-Download the ZIP version of this repository and extract it.
+1. Download the latest ZIP version of this repository and extract it.
 Example location:
 path\netmetrics-app
 
-- 2. Run "start-netmetrics" batch file as an administrator.
+2. Run "start-netmetrics" batch file as an administrator.
    
    <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
 
-- 4. Start the Monitoring Stack
+4. Start the Monitoring Stack
    Enter 1 to start monitoring.
    
 Once the script finishes:
