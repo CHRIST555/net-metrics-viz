@@ -46,23 +46,23 @@
 ## Requirements 
   ### Functional Requirements 
   
-  - Data Collection
+  - **Data Collection**
     - Collect real-time metrics (throughput, latency, CPU, memory, uptime) via SNMP v2c/v3.
     - Allow adding/removing monitored devices and configuring polling intervals.
     
-  - Data Storage
+  - **Data Storage**
     - Store collected metrics in a Time-Series Database (Prometheus or InfluxDB).
     - Retain historical data for trend and performance analysis.
    
-  - Visualization
+  - **Visualization**
     - Display real-time and historical graphs in a Grafana dashboard.
     - Include panels for device health, interface stats, and alert status.
   
-  - Event Detection & Alerts
+  - **Event Detection & Alerts**
     - Detect device downtime, throughput drops, and high latency.
     - Trigger push notifications through Alertmanager, webhooks, or ntfy.
 
-  - Containerization & Deployment
+  - **Containerization & Deployment**
     - Run all services (SNMP exporter, TSDB, alert system, dashboard) in separate Docker containers.
     - Deploy on a single VM using Docker Compose with persistent storage volumes.
       
@@ -73,7 +73,9 @@
   - **Security:** Use SNMPv3 for authentication/encryption and HTTPS for dashboards.
   - **Usability:** Provide a clean, responsive, and intuitive web interface.
   - **Maintainability:** Configurable thresholds and polling intervals.
-  - **Portability:** Must be easily deployable on any Linux VM via Docker Compose.
+  - **Portability:** Must be easily deployable
+    - on any Linux VM via Docker Compose
+    - on any Windows computer via Docker Desktop.
 
   ### System Requirements 
   
