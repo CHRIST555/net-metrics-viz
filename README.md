@@ -113,20 +113,25 @@ Example location:
 path\netmetrics-app
 
 2. Run "start-netmetrics" batch file as an administrator.
-  <img width="729" height="291" alt="image" src="https://github.com/user-attachments/assets/2e32d6a0-23e4-4e26-98d4-8cd882f4e7af" />
+   <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
+
 
 3. Start the Monitoring Stack
    Enter 1 to start monitoring.
-
+   
 Once the script finishes:
 All images and containers will be built and started automatically.
+
+<img width="1233" height="715" alt="image" src="https://github.com/user-attachments/assets/494d2085-0d23-4f1e-b0dd-c2b09c031ecc" />
+
 The script will output the URLs for:
 - Grafana
 - Prometheus
 - SNMP Exporter
 - Any additional services (if configured)
+- 
+<img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
 
-  <img width="888" height="299" alt="image" src="https://github.com/user-attachments/assets/b7c61dec-6120-4585-8e9e-3d619823ef81" />
 
 
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
