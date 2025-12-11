@@ -17,9 +17,12 @@
         {
           "type": "stat",
           "title": "Host Status",
-          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+          "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
           "datasource": { "type": "prometheus", "uid": "Prometheus" },
-          "targets": [{ "expr": "up{job=\"windows\", instance=\"192.168.1.161:9182\"}", "refId": "A" }],
+          "targets": [{ 
+            "expr": "max(up{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
           "options": {
             "reduceOptions": { "calcs": ["lastNotNull"], "values": false },
             "orientation": "auto",
@@ -39,46 +42,308 @@
         },
         {
           "type": "stat",
-          "title": "Uptime",
-          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+          "title": "System Uptime",
+          "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
           "datasource": { "type": "prometheus", "uid": "Prometheus" },
-          "fieldConfig": { "defaults": { "unit": "d" } },
-          "targets": [{ "expr": "windows_system_up_time_seconds{instance=\"192.168.1.161:9182\"} / 86400", "refId": "A" }],
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "dtdurations",
+              "decimals": 1
+            } 
+          },
+          "targets": [{ 
+            "expr": "max(time() - windows_system_boot_time_timestamp{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
           "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
         },
         {
-          "type": "timeseries",
-          "title": "CPU Usage (%)",
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 5 },
-          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
-          "targets": [{ "expr": "100 - avg(irate(windows_cpu_time_total{mode=\"idle\", instance=\"192.168.1.161:9182\"}[5m])) by (instance) * 100", "legendFormat": "CPU" }]
+          "type": "stat",
+          "title": "Processes",
+          "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_system_processes{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "stat",
+          "title": "CPU Cores",
+          "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_cpu_logical_processor{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "stat",
+          "title": "Total RAM",
+          "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "bytes",
+              "decimals": 1
+            } 
+          },
+          "targets": [{ 
+            "expr": "max(windows_memory_physical_total_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "stat",
+          "title": "OS Version",
+          "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_os_info{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "textMode": "name"
+          },
+          "transformations": [
+            {
+              "id": "labelsToFields",
+              "options": { "valueLabel": "product" }
+            }
+          ]
         },
         {
           "type": "timeseries",
-          "title": "Memory Usage (%)",
+          "title": "CPU Usage per Core (%)",
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 5 },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "percent", 
+              "min": 0, 
+              "max": 100,
+              "custom": {
+                "drawStyle": "line",
+                "lineInterpolation": "linear",
+                "fillOpacity": 10,
+                "pointSize": 5
+              }
+            } 
+          },
+          "targets": [
+            { 
+              "expr": "100 - (max by (core) (rate(windows_cpu_time_total{mode=\"idle\", job=\"windows\", instance=\"192.168.1.161:9182\"}[5m])) * 100)", 
+              "legendFormat": "Core {{core}}"
+            },
+            { 
+              "expr": "100 - avg(rate(windows_cpu_time_total{mode=\"idle\", job=\"windows\", instance=\"192.168.1.161:9182\"}[5m])) * 100", 
+              "legendFormat": "Average CPU"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Memory Usage",
           "gridPos": { "h": 7, "w": 12, "x": 12, "y": 5 },
-          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
-          "targets": [{ "expr": "100 - (windows_memory_available_bytes{instance=\"192.168.1.161:9182\"} / windows_cs_physical_memory_bytes{instance=\"192.168.1.161:9182\"} * 100)", "legendFormat": "Used" }]
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "bytes",
+              "custom": {
+                "drawStyle": "line",
+                "lineInterpolation": "linear",
+                "fillOpacity": 20
+              }
+            } 
+          },
+          "targets": [
+            { 
+              "expr": "max(windows_memory_physical_total_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"}) - max(windows_memory_available_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+              "legendFormat": "Used Memory"
+            },
+            { 
+              "expr": "max(windows_memory_available_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+              "legendFormat": "Available Memory"
+            },
+            { 
+              "expr": "max(windows_memory_committed_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+              "legendFormat": "Committed Memory"
+            }
+          ]
         },
         {
           "type": "timeseries",
           "title": "Disk Usage per Volume (%)",
-          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
-          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 12 },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "percent", 
+              "min": 0, 
+              "max": 100,
+              "custom": {
+                "drawStyle": "line",
+                "fillOpacity": 15
+              }
+            } 
+          },
           "targets": [{
-            "expr": "100 * (windows_logical_disk_size_bytes{instance=\"192.168.1.161:9182\"} - windows_logical_disk_free_bytes{instance=\"192.168.1.161:9182\"}) / windows_logical_disk_size_bytes{instance=\"192.168.1.161:9182\"}",
-            "legendFormat": "{{volume}}"
+            "expr": "100 * (max by (volume) (windows_logical_disk_size_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"}) - max by (volume) (windows_logical_disk_free_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})) / max by (volume) (windows_logical_disk_size_bytes{job=\"windows\", instance=\"192.168.1.161:9182\"})",
+            "legendFormat": "{{volume}} Used"
           }]
         },
         {
           "type": "timeseries",
-          "title": "Network Traffic",
-          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
-          "fieldConfig": { "defaults": { "unit": "Bps" } },
+          "title": "Disk I/O Operations",
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 12 },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "iops",
+              "custom": {
+                "drawStyle": "line",
+                "lineInterpolation": "linear"
+              }
+            } 
+          },
           "targets": [
-            { "expr": "irate(windows_net_bytes_received_total{instance=\"192.168.1.161:9182\"}[5m])", "legendFormat": "↓ {{nic}} RX" },
-            { "expr": "irate(windows_net_bytes_sent_total{instance=\"192.168.1.161:9182\"}[5m])", "legendFormat": "↑ {{nic}} TX" }
+            { 
+              "expr": "sum by (volume) (rate(windows_logical_disk_reads_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "↓ {{volume}} Reads"
+            },
+            { 
+              "expr": "sum by (volume) (rate(windows_logical_disk_writes_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "↑ {{volume}} Writes"
+            }
           ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Network Traffic",
+          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 19 },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "Bps",
+              "custom": {
+                "drawStyle": "line",
+                "fillOpacity": 10
+              }
+            } 
+          },
+          "targets": [
+            { 
+              "expr": "sum by (nic) (rate(windows_net_bytes_received_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "↓ {{nic}} RX"
+            },
+            { 
+              "expr": "sum by (nic) (rate(windows_net_bytes_sent_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "↑ {{nic}} TX"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "System Performance Counters",
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 19 },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "ops",
+              "custom": {
+                "drawStyle": "line",
+                "lineInterpolation": "linear"
+              }
+            } 
+          },
+          "targets": [
+            { 
+              "expr": "max(rate(windows_system_context_switches_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "Context Switches/sec"
+            },
+            { 
+              "expr": "max(rate(windows_system_system_calls_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "System Calls/sec"
+            },
+            { 
+              "expr": "max(rate(windows_memory_page_faults_total{job=\"windows\", instance=\"192.168.1.161:9182\"}[5m]))", 
+              "legendFormat": "Page Faults/sec"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Processor Queue Length",
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_system_processor_queue_length{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  { "color": "green", "value": null },
+                  { "color": "yellow", "value": 2 },
+                  { "color": "red", "value": 5 }
+                ]
+              }
+            }
+          },
+          "options": { 
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "colorMode": "background"
+          }
+        },
+        {
+          "type": "stat",
+          "title": "Active Threads",
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_system_threads{job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "stat",
+          "title": "Windows Exporter Service",
+          "gridPos": { "h": 4, "w": 6, "x": 12, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "max(windows_service_state{name=\"windows_exporter\", state=\"running\", job=\"windows\", instance=\"192.168.1.161:9182\"})", 
+            "refId": "A" 
+          }],
+          "options": {
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "colorMode": "value",
+            "valueMappings": [
+              { 
+                "type": "value", 
+                "options": { 
+                  "0": { "text": "STOPPED", "color": "red" }, 
+                  "1": { "text": "RUNNING", "color": "green" } 
+                } 
+              }
+            ]
+          }
+        },
+        {
+          "type": "stat",
+          "title": "CPU Frequency",
+          "gridPos": { "h": 4, "w": 6, "x": 18, "y": 26 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "fieldConfig": { 
+            "defaults": { 
+              "unit": "hertz",
+              "custom": { "displayMode": "basic" }
+            } 
+          },
+          "targets": [{ 
+            "expr": "max(avg(windows_cpu_core_frequency_mhz{job=\"windows\", instance=\"192.168.1.161:9182\"}) * 1000000)", 
+            "refId": "A" 
+          }],
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] } }
         }
       ]
     },
@@ -90,10 +355,13 @@
       "panels": [
         {
           "type": "stat",
-          "title": "NAS Status",
-          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 2 },
+          "title": "NAS Connection Status",
+          "gridPos": { "h": 4, "w": 4, "x": 0, "y": 2 },
           "datasource": { "type": "prometheus", "uid": "Prometheus" },
-          "targets": [{ "expr": "up{job=\"synology-system\", instance=\"192.168.1.160\"}", "refId": "A" }],
+          "targets": [{ 
+            "expr": "max(up{instance=\"192.168.1.160\"})", 
+            "refId": "A" 
+          }],
           "options": {
             "reduceOptions": { "calcs": ["lastNotNull"] },
             "colorMode": "value",
@@ -110,49 +378,87 @@
         },
         {
           "type": "stat",
-          "title": "Uptime (days)",
-          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 2 },
-          "fieldConfig": { "defaults": { "unit": "d", "decimals": 1 } },
-          "targets": [{ "expr": "sysUpTime{instance=\"192.168.1.160\"} / 8640000", "refId": "A" }]
+          "title": "System Uptime",
+          "gridPos": { "h": 4, "w": 4, "x": 4, "y": 2 },
+          "fieldConfig": { "defaults": { "unit": "dtdurations", "decimals": 1 } },
+          "targets": [{ 
+            "expr": "max(sysUpTime{instance=\"192.168.1.160\"}) / 100", 
+            "refId": "A" 
+          }]
+        },
+        {
+          "type": "stat",
+          "title": "SNMP Metrics Count",
+          "gridPos": { "h": 4, "w": 4, "x": 8, "y": 2 },
+          "datasource": { "type": "prometheus", "uid": "Prometheus" },
+          "targets": [{ 
+            "expr": "count(count by (__name__)({instance=\"192.168.1.160\"} != 0))", 
+            "refId": "A" 
+          }],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "steps": [
+                  { "color": "red", "value": null },
+                  { "color": "yellow", "value": 5 },
+                  { "color": "green", "value": 10 }
+                ]
+              }
+            }
+          },
+          "options": { 
+            "reduceOptions": { "calcs": ["lastNotNull"] },
+            "colorMode": "background"
+          }
         },
         {
           "type": "timeseries",
-          "title": "Network Traffic",
+          "title": "Network Traffic (SNMP)",
           "gridPos": { "h": 7, "w": 12, "x": 0, "y": 6 },
           "fieldConfig": { "defaults": { "unit": "Bps" } },
           "targets": [
-            { "expr": "irate(ifHCInOctets{instance=\"192.168.1.160\"}[5m])", "legendFormat": "↓ {{ifDescr}} RX" },
-            { "expr": "irate(ifHCOutOctets{instance=\"192.168.1.160\"}[5m])", "legendFormat": "↑ {{ifDescr}} TX" }
+            { 
+              "expr": "max by (ifIndex) (rate(ifHCInOctets{instance=\"192.168.1.160\"}[5m]) or rate(ifInOctets{instance=\"192.168.1.160\"}[5m]))", 
+              "legendFormat": "↓ Interface {{ifIndex}} RX" 
+            },
+            { 
+              "expr": "max by (ifIndex) (rate(ifHCOutOctets{instance=\"192.168.1.160\"}[5m]) or rate(ifOutOctets{instance=\"192.168.1.160\"}[5m]))", 
+              "legendFormat": "↑ Interface {{ifIndex}} TX" 
+            }
           ]
         },
         {
           "type": "timeseries",
-          "title": "RAM Usage (%)",
+          "title": "Storage Usage",
           "gridPos": { "h": 7, "w": 12, "x": 12, "y": 6 },
           "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
           "targets": [{
-            "expr": "100 - 100 * (hrStorageFree{hrStorageDescr=\"RAM\", instance=\"192.168.1.160\"} / hrStorageSize{hrStorageDescr=\"RAM\", instance=\"192.168.1.160\"})",
-            "legendFormat": "RAM Used"
+            "expr": "100 * (max by (hrStorageDescr) (hrStorageSize{instance=\"192.168.1.160\"}) - max by (hrStorageDescr) (hrStorageUsed{instance=\"192.168.1.160\"})) / max by (hrStorageDescr) (hrStorageSize{instance=\"192.168.1.160\"})",
+            "legendFormat": "{{hrStorageDescr}} Free %"
           }]
         },
         {
-          "type": "timeseries",
-          "title": "Volume Usage (%)",
-          "gridPos": { "h": 7, "w": 12, "x": 0, "y": 13 },
-          "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 } },
+          "type": "table",
+          "title": "Available SNMP Metrics",
+          "gridPos": { "h": 7, "w": 24, "x": 0, "y": 13 },
           "targets": [{
-            "expr": "100 * (hrStorageSize{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"} - hrStorageFree{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"}) / hrStorageSize{hrStorageDescr=~\"Volume.*\", instance=\"192.168.1.160\"}",
-            "legendFormat": "{{hrStorageDescr}}"
-          }]
-        },
-        {
-          "type": "timeseries",
-          "title": "Temperature (°C)",
-          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 13 },
-          "fieldConfig": { "defaults": { "unit": "celsius" } },
-          "targets": [
-            { "expr": "ssCpuTemperature{instance=\"192.168.1.160\"}", "legendFormat": "CPU Temp" },
-            { "expr": "systemTemperature{instance=\"192.168.1.160\"}", "legendFormat": "System Temp" }
+            "expr": "group by (__name__) ({instance=\"192.168.1.160\"} != 0)",
+            "legendFormat": "{{__name__}}",
+            "format": "table",
+            "instant": true
+          }],
+          "transformations": [
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "__name__": {
+                    "aggregations": ["count"],
+                    "operation": "groupby"
+                  }
+                }
+              }
+            }
           ]
         }
       ]
@@ -165,7 +471,7 @@
   "templating": { "list": [] },
   "time": { "from": "now-6h", "to": "now" },
   "timezone": "",
-  "title": "Network Metrics Visualizer (NMV) Dashboard",
-  "version": 10
+  "title": "Home Lab Overview — No Duplicates",
+  "version": 13
 }
 
