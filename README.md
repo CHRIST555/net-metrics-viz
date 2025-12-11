@@ -13,7 +13,7 @@
 
 ## About
 
-  The Network Metrics Visualizer monitors network devices in real time using SNMP, storing metrics in a time-series database and displaying them on a Grafana dashboard. 
+  The Network Metrics Visualizer monitors network devices in real time using SNMP Exporter and a Windows Exporter Agent, storing metrics in a time-series database and displaying them on a Grafana dashboard. 
   It detects issues like device downtime, throughput drops, and high latency, sending push notifications for alerts.
   All components run as Docker containers on a single VM, making deployment simple, portable, and easy to manage. 
 
@@ -26,48 +26,49 @@
      
 ## Design 
 
- - One-click startup using a PowerShell script
+ - One-click startup using a PowerShell script.
  - Automatically build all required images and containers in a single VM.
    - Docker Desktop creates a Linux VM (using Hyper-V/WSL2 on Windows) to host the Docker Engine.
  - Enable SNMP (v2c or v3) on target devices; note IPs, communities/creds.
- - Windows Hosts use windows_exporter-0.31.3 Agent for metrics 
+ - Windows devices use windows_exporter-0.31.3 Agent for metrics 
      - https://github.com/prometheus-community/windows_exporter/releases 
  - Containerize a polling stack: SNMP exporter/collector → TSDB (e.g., Prometheus + snmp_exporter).
-     Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
+ - Ingest key OIDs: interface octets/pps, uptime, CPU/mem, reachability.
  - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
  - Create alert rules for:
-            - Device down/unreachable (no scrape / failed probe).
-            - Throughput drop vs baseline or absolute threshold.
-            - Latency above threshold.
+   - Device down/unreachable (no scrape / failed probe).
+   - Throughput drop vs baseline or absolute threshold.
+   - Latency above threshold.
   - Implement push notifications (e.g., ntfy/webhook/Alertmanager receiver).
-  - Build Grafana dashboards for interfaces, device health, and alert status.
+  - Build Grafana dashboard for interfaces, device health, and alert status.
   - Persist configs/data with Docker volumes; expose only needed ports.
 
 ## Requirements 
   ### Functional Requirements 
   
   - Data Collection
-      Collect real-time metrics (throughput, latency, CPU, memory, uptime) via SNMP v2c/v3.
-      Allow adding/removing monitored devices and configuring polling intervals.
+    - Collect real-time metrics (throughput, latency, CPU, memory, uptime) via SNMP v2c/v3.
+    - Allow adding/removing monitored devices and configuring polling intervals.
     
   - Data Storage
-      Store collected metrics in a Time-Series Database (Prometheus or InfluxDB).
-      Retain historical data for trend and performance analysis.
+    - Store collected metrics in a Time-Series Database (Prometheus or InfluxDB).
+    - Retain historical data for trend and performance analysis.
    
   - Visualization
-      Display real-time and historical graphs in a Grafana dashboard.
-      Include panels for device health, interface stats, and alert status.
-      Event Detection & Alerts
-      Detect device downtime, throughput drops, and high latency.
-      Trigger push notifications through Alertmanager, webhooks, or ntfy.
+    - Display real-time and historical graphs in a Grafana dashboard.
+    - Include panels for device health, interface stats, and alert status.
+  
+  - Event Detection & Alerts
+    - Detect device downtime, throughput drops, and high latency.
+    - Trigger push notifications through Alertmanager, webhooks, or ntfy.
 
   - Containerization & Deployment
-      Run all services (SNMP exporter, TSDB, alert system, dashboard) in separate Docker containers.
-      Deploy on a single VM using Docker Compose with persistent storage volumes.
+    - Run all services (SNMP exporter, TSDB, alert system, dashboard) in separate Docker containers.
+    - Deploy on a single VM using Docker Compose with persistent storage volumes.
       
   ### Non-Functional Requirements 
   
-  - Performance: Support at least 10–20 monitored devices concurrently.
+  - **Performance:** Support at least 10–20 monitored devices concurrently.
   - Reliability: Retry failed SNMP polls automatically.
   - Security: Use SNMPv3 for authentication/encryption and HTTPS for dashboards.
   - Usability: Provide a clean, responsive, and intuitive web interface.
