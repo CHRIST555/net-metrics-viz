@@ -130,12 +130,13 @@ The script will output the URLs for:
 - Prometheus
 - SNMP Exporter
 - Any additional services (if configured)
-- 
+  
 <img width="976" height="514" alt="image" src="https://github.com/user-attachments/assets/9804109e-4634-4815-b118-98e1b6ed8df4" />
 
 
 Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
 Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+
 <img width="1911" height="1122" alt="image" src="https://github.com/user-attachments/assets/d7f65397-647b-45a1-9250-3596c6316ada" />
 
 ## Usage
