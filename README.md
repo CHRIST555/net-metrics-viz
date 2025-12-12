@@ -29,6 +29,7 @@
  - One-click startup using a PowerShell script.
  - Automatically build all required images and containers in a single VM.
    - Docker Desktop creates a Linux VM (using Hyper-V/WSL2 on Windows) to host the Docker Engine.
+     - https://docs.docker.com/desktop/
  - Enable SNMP (v2c or v3) on target devices; note IPs, communities/creds.
  - Windows devices use windows_exporter-0.31.3 Agent for metrics 
      - https://github.com/prometheus-community/windows_exporter/releases 
