@@ -4,11 +4,11 @@
 ## Table of Contents
 - [About](#About)
 - [Objectives](#Objectives)
+- [Usage](#Usage)
 - [Design](#Design)
 - [Requirements](#Requirements)
 - [Structure](#Structure)
 - [Installation](#Installation)
-- [Usage](#Usage)
 - [Milestones](#Milestones)
 
 ## About
@@ -23,6 +23,12 @@
   - Store time-series data in a TSDB (e.g., Prometheus or InfluxDB) and visualize it.
   - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
   - Run all components on a single VM, each as a Docker container.
+
+## Usage
+
+- Collect real-time network metrics via SNMP.
+- Store time-series data using Prometheus.
+- Visualize performance with Grafana dashboards.
      
 ## Design 
 
@@ -145,11 +151,6 @@
 <br>
 <br>
 
-## Usage
-
-- Collect real-time network metrics via SNMP.
-- Store time-series data using Prometheus.
-- Visualize performance with Grafana dashboards.
 
 ## Milestones
 
@@ -169,12 +170,11 @@
   -  HTTPS Grafana Dashboard
   -  GitHub repository
   -  Configure notifications via Alertmanager → Grafana
+  -  Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
 
 - Outstanding Deliverables
   - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
-  - Detect events (throughput drop, latency increase, device offline) and trigger push notifications.
-
-  
+ 
 
   [@CHRIST555](https://github.com/CHRIST555).
 
