@@ -130,20 +130,20 @@ netmetrics-app/
      - Once the script finishes:
        - All images and containers will be built and started automatically.
 
-<img width="1362" height="718" alt="image" src="https://github.com/user-attachments/assets/5a29ee90-8e63-452e-972a-c98313afd2ef" />
+  <img width="1362" height="718" alt="image" src="https://github.com/user-attachments/assets/5a29ee90-8e63-452e-972a-c98313afd2ef" />
 
      - The script will output the URLs for:
- - Grafana
-    - Prometheus
-    - SNMP Exporter
-    - Any additional services (if configured)
-    - The monitoring stack outputs a screen for troubleshooting purposes:
+       - Grafana
+       - Prometheus
+       - SNMP Exporter
+       - Any additional services (if configured)
+         - The monitoring stack outputs a screen for troubleshooting purposes:
   
-<img width="984" height="521" alt="image" src="https://github.com/user-attachments/assets/44f5a113-4724-4ead-806c-d56d7140f6bb" />
+  <img width="984" height="521" alt="image" src="https://github.com/user-attachments/assets/44f5a113-4724-4ead-806c-d56d7140f6bb" />
 
-4. Access your services
-   - Open any local web browser and copy each URL from the monitoring stack into the browser to access the monitoring services.
-   - Import the JSON file (snmp-dashboard) into the Grafana console to see the "Network Metrics Visualizer (NMV) Dashboard"
+  4. Access your services
+     - Open any local web browser and copy each URL from the monitoring stack into the browser to access the monitoring services.
+     - Import the JSON file (snmp-dashboard) into the Grafana console to see the "Network Metrics Visualizer (NMV) Dashboard"
 
 <img width="1901" height="1022" alt="image" src="https://github.com/user-attachments/assets/6c62bc21-4d1f-4d10-8656-a654f0b95f8e" />
 
