@@ -98,6 +98,7 @@ netmetrics-app/
 - scripts
      - snmp-dashboard       <- Dashboard JSON file
 - grafana/                  <- Grafana dashboards/datasources & SSL certificates for HTTPS
+     -  grafana.ini
      - provisioning/
        - datasources/
          - prometheus.yaml
