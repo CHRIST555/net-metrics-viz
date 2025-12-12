@@ -111,41 +111,51 @@ netmetrics-app/
   - Docker Desktop (latest version)
   - Verify installation by running:
     - docker --version  
-
+<br>
   <img width="1112" height="728" alt="image" src="https://github.com/user-attachments/assets/8a2986c8-0747-406c-bcaf-0124c2ca7616" />
+<br>
+<br>
 
 - **Setup Steps:** Follow the steps below to install and launch the NetMetrics monitoring stack.
+  - Download the Project
+    - Download the ZIP version of this repository and extract it.
+    - Example location:
+    - path\netmetrics-app
 
-  1. Download the Project
-     - Download the ZIP version of this repository and extract it.
-     - Example location:
-       - path\netmetrics-app
+  - Run "start-netmetrics" batch file as an administrator.
 
-  2. Run "start-netmetrics" batch file as an administrator.
-   
+<br>   
    <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
+<br>
+<br>
 
-  3. Start the Monitoring Stack
-     - Enter 1 to start monitoring.
-     - Once the script finishes:
-       - All images and containers will be built and started automatically.
-         
+  - Start the Monitoring Stack
+    - Enter 1 to start monitoring.
+    - Once the script finishes:
+    - All images and containers will be built and started automatically.
+<br>         
     <img width="1362" height="718" alt="image" src="https://github.com/user-attachments/assets/5a29ee90-8e63-452e-972a-c98313afd2ef" />
-       
-   4. The script will output the URLs for:
-      - Grafana
-      - Prometheus
-      - SNMP Exporter
-      - Any additional services (if configured)
-        - The monitoring stack outputs a screen for troubleshooting purposes:
-  
+<br>
+<br>
+
+  - The script will output the URLs for:
+    - Grafana
+    - Prometheus
+    - SNMP Exporter
+    - Any additional services (if configured)
+      - The monitoring stack outputs a screen for troubleshooting purposes:
+<br>  
   <img width="984" height="521" alt="image" src="https://github.com/user-attachments/assets/44f5a113-4724-4ead-806c-d56d7140f6bb" />
+<br>
+<br>
 
-  5. Access your services
-     - Open any local web browser and copy each URL from the monitoring stack into the browser to access the monitoring services.
-     - Import the JSON file (snmp-dashboard) into the Grafana console to see the "Network Metrics Visualizer (NMV) Dashboard"
-
-<img width="1901" height="1022" alt="image" src="https://github.com/user-attachments/assets/6c62bc21-4d1f-4d10-8656-a654f0b95f8e" />
+  - Access your services
+    - Open any local web browser and copy each URL from the monitoring stack into the browser to access the monitoring services.
+    - Import the JSON file (snmp-dashboard) into the Grafana console to see the "Network Metrics Visualizer (NMV) Dashboard"
+<br>
+  <img width="1901" height="1022" alt="image" src="https://github.com/user-attachments/assets/6c62bc21-4d1f-4d10-8656-a654f0b95f8e" />
+<br>
+<br>
 
 ## Usage
 
