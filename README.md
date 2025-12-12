@@ -110,69 +110,67 @@ netmetrics-app/
   - Windows 11
   - Docker Desktop (latest version)
   - Verify installation by running:
-    - docker --version
-      
+    - docker --version  
 
   <img width="1112" height="728" alt="image" src="https://github.com/user-attachments/assets/8a2986c8-0747-406c-bcaf-0124c2ca7616" />
 
-Setup Steps:
-Follow the steps below to install and launch the NetMetrics monitoring stack.
+- **Setup Steps:** Follow the steps below to install and launch the NetMetrics monitoring stack.
 
 1. Download the Project
-Download the ZIP version of this repository and extract it.
-Example location:
-path\netmetrics-app
+   - Download the ZIP version of this repository and extract it.
+   - Example location:
+     - path\netmetrics-app
 
 2. Run "start-netmetrics" batch file as an administrator.
    
    <img width="979" height="518" alt="image" src="https://github.com/user-attachments/assets/4ed8b8b6-6431-4800-9ed4-db2026ce58ab" />
 
-4. Start the Monitoring Stack
-   Enter 1 to start monitoring.
-   
-Once the script finishes:
-All images and containers will be built and started automatically.
+3. Start the Monitoring Stack
+   - Enter 1 to start monitoring.
+   - Once the script finishes:
+     - All images and containers will be built and started automatically.
 
 <img width="1362" height="718" alt="image" src="https://github.com/user-attachments/assets/5a29ee90-8e63-452e-972a-c98313afd2ef" />
 
-The script will output the URLs for:
-- Grafana
-- Prometheus
-- SNMP Exporter
-- Any additional services (if configured)
+  - The script will output the URLs for:
+    - Grafana
+    - Prometheus
+    - SNMP Exporter
+    - Any additional services (if configured)
+    - The monitoring stack outputs a screen for troubleshooting purposes:
   
 <img width="984" height="521" alt="image" src="https://github.com/user-attachments/assets/44f5a113-4724-4ead-806c-d56d7140f6bb" />
 
-
-Open any local web browser and copy each URL into the browser to access the monitoring interfaces.
-Import the Grafana Json file in the scripts folder to see the "Network Metrics Visualizer (NMV) Dashboard"
+4. Access your services
+   - Open any local web browser and copy each URL from the monitoring stack into the browser to access the monitoring services.
+   - Import the JSON file (snmp-dashboard) into the Grafana console to see the "Network Metrics Visualizer (NMV) Dashboard"
 
 <img width="1901" height="1022" alt="image" src="https://github.com/user-attachments/assets/6c62bc21-4d1f-4d10-8656-a654f0b95f8e" />
 
 ## Usage
 
-- Collect real-time network metrics via SNMP
-- Store time-series data using Prometheus
-- Visualize performance with Grafana dashboards
+- Collect real-time network metrics via SNMP.
+- Store time-series data using Prometheus.
+- Visualize performance with Grafana dashboards.
 
 ## Milestones
 
-  - Deliverables
-    -  All components run in Docker
-    -  Store time-series data in a TSDB
-    -  Ingest key OIDs: Synology-specific MIBs (complete OID tree)
-        - 1.3.6.1.4.1.6574.1  # System info (status, temperature, fans)
-        - 1.3.6.1.4.1.6574.2  # Disk info (complete disk table)
-        - 1.3.6.1.4.1.6574.3  # RAID info
-        - 1.3.6.1.4.1.6574.4  # UPS info (if connected)
-        - 1.3.6.1.4.1.6574.5  # Smart disk info
-        - 1.3.6.1.4.1.6574.6  # Service status
-        - 1.3.6.1.4.1.6574.101 # Storage IO
-        - 1.3.6.1.4.1.6574.102 # Space IO
-        - 1.3.6.1.4.1.6574.104 # iSCSI LUN info
-    -  HTTPS Grafana Dashboard
-    -  GitHub repository
-    -    - Configure notifications via Alertmanager → Grafana
+- Deliverables
+  -  All components run in Docker
+  -  Store time-series data in a TSDB
+  -  **Ingest key OIDs:** Synology-specific MIBs (complete OID tree)
+      - 1.3.6.1.4.1.6574.1  # System info (status, temperature, fans)
+      - 1.3.6.1.4.1.6574.2  # Disk info (complete disk table)
+      - 1.3.6.1.4.1.6574.3  # RAID info
+      - 1.3.6.1.4.1.6574.4  # UPS info (if connected)
+      - 1.3.6.1.4.1.6574.5  # Smart disk info
+      - 1.3.6.1.4.1.6574.6  # Service status
+      - 1.3.6.1.4.1.6574.101 # Storage IO
+      - 1.3.6.1.4.1.6574.102 # Space IO
+      - 1.3.6.1.4.1.6574.104 # iSCSI LUN info
+  -  HTTPS Grafana Dashboard
+  -  GitHub repository
+  -  Configure notifications via Alertmanager → Grafana
 
 - Outstanding Deliverables
   - Add latency/availability probes (e.g., blackbox-exporter ICMP/TCP) to the same TSDB.
