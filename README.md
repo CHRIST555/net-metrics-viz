@@ -87,24 +87,10 @@
   
 ## Structure
 
-netmetrics-app/
-- start-netmetrics.bat      <- Menu interface calling start/stop/status     
-- start-monitoring.ps1      <- Powershell script to start containers
-- stop-monitoring.ps1       <- Powershell script to stop containers
-- docker-compose.yml        <- Stack definitions
-- prometheus.yml            <- Prometheus configuration
-- rules.yml                 <- Prometheus alert rules (optional)
-- alertmanager.yml          <- Alertmanager configuration
-- scripts
-     - snmp-dashboard       <- Dashboard JSON file
-- grafana/                  <- Grafana dashboards/datasources & SSL certificates for HTTPS
-     -  grafana.ini
-     - provisioning/
-       - datasources/
-         - prometheus.yaml
-       - certs/               
-         - grafana.crt
-         - grafana.key
+<br>
+<img width="891" height="646" alt="image" src="https://github.com/user-attachments/assets/40c09586-9fb8-498c-9c9b-23d546980a65" />
+<br>
+<br>
 
 ## Installation
 
