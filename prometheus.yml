@@ -1,6 +1,6 @@
 global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
+  scrape_interval: 5s
+  evaluation_interval: 5s
 
 rule_files:
   - "rules.yml"
@@ -46,7 +46,7 @@ scrape_configs:
       module: [synology]
     static_configs:
       - targets:
-          - 192.168.1.160
+          - 192.168.1.160       # Enter Targets
         labels:
           device_name: CHRI-NAS-System
           location: home
@@ -73,7 +73,7 @@ scrape_configs:
       module: [if_mib]
     static_configs:
       - targets:
-          - 192.168.1.160
+          - 192.168.1.160    # Enter Targets
         labels:
           device_name: CHRI-NAS-Network
           location: home
@@ -106,7 +106,7 @@ scrape_configs:
     scrape_timeout: 10s
     static_configs:
       - targets:
-          - 192.168.1.161:9182
+          - 192.168.1.161:9182           # Enter Targets
         labels:
           device_name: WIN-HOST
           location: home

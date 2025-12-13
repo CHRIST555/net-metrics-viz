@@ -31,28 +31,30 @@ services:
       - monitoring-net
     restart: unless-stopped
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    environment:
-      - GF_INSTALL_PLUGINS=grafana-piechart-panel
-      - GF_SERVER_PROTOCOL=https
-      - GF_SERVER_CERT_FILE=/etc/grafana/certs/grafana.crt
-      - GF_SERVER_CERT_KEY=/etc/grafana/certs/grafana.key
-      - GF_UNIFIED_ALERTING_ENABLED=true
-      - GF_ALERTING_ENABLED=false  
-    volumes:
-      - grafana-storage:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning:ro
-      - ./grafana/certs/grafana.crt:/etc/grafana/certs/grafana.crt:ro
-      - ./grafana/certs/grafana.key:/etc/grafana/certs/grafana.key:ro
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-    networks:
-      - monitoring-net
-    restart: unless-stopped
+grafana:
+  image: grafana/grafana:latest
+  container_name: grafana
+  environment:
+    - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    - GF_SERVER_PROTOCOL=https
+    - GF_SERVER_CERT_FILE=/etc/grafana/certs/grafana.crt
+    - GF_SERVER_CERT_KEY=/etc/grafana/certs/grafana.key
+    - GF_UNIFIED_ALERTING_ENABLED=true
+  volumes:
+    - grafana-storage:/var/lib/grafana
+    - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    - ./grafana/certs/grafana.crt:/etc/grafana/certs/grafana.crt:ro
+    - ./grafana/certs/grafana.key:/etc/grafana/certs/grafana.key:ro
+    - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+
+  ports:
+    - "3000:3000"
+  depends_on:
+    - prometheus
+  networks:
+    - monitoring-net
+  restart: unless-stopped
+
 
   alertmanager:
     image: prom/alertmanager:latest

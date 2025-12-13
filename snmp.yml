@@ -63,4 +63,3 @@ modules:
     retries: 2
     timeout: 10s
     max_repetitions: 25
-
