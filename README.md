@@ -6,8 +6,8 @@
 - [Objectives](#Objectives)
 - [Usage](#Usage)
 - [Design](#Design)
-- [Requirements](#Requirements)
 - [Structure](#Structure)
+- [Requirements](#Requirements)
 - [Installation](#Installation)
 - [Milestones](#Milestones)
 
@@ -50,6 +50,13 @@
   - Build Grafana dashboard for interfaces, device health, and alert status.
   - Persist configs/data with Docker volumes; expose only needed ports.
 
+## Structure
+
+<br>
+<img width="891" height="646" alt="image" src="https://github.com/user-attachments/assets/40c09586-9fb8-498c-9c9b-23d546980a65" />
+<br>
+<br>
+
 ## Requirements 
   ### Functional Requirements 
   
@@ -90,13 +97,6 @@
   - **Hardware:** 2 vCPUs, 4 GB RAM, 20–40 GB storage minimum.
   - **Software:** Docker, Docker Compose, Prometheus, Grafana, SNMP exporter, Blackbox exporter, Alertmanager.
   - **Network:** SNMP access (UDP 161) to all monitored devices; internet access for notifications.
-  
-## Structure
-
-<br>
-<img width="891" height="646" alt="image" src="https://github.com/user-attachments/assets/40c09586-9fb8-498c-9c9b-23d546980a65" />
-<br>
-<br>
 
 ## Installation
 
