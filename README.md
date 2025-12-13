@@ -17,7 +17,7 @@
   It detects issues like device downtime, throughput drops, and high latency, sending push notifications for alerts.
   All components run as Docker containers on a single VM, making deployment simple, portable, and easy to manage. 
   <br>
-  [Project Demo Video]([url](https://gmuedu-my.sharepoint.com/:v:/r/personal/akatti2_gmu_edu/Documents/!%20Fall%202025/Project%20Video%20Uploads/Christian%20Garcia%20Project%20Demo.mp4?csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=0NHMXV))
+  [Project Demo Video]([url](https://gmuedu-my.sharepoint.com/:v:/r/personal/akatti2_gmu_edu/Documents/!%20Fall%202025/Project%20Video%20Uploads/Christian%20Garcia%20Project%20Demo.mp4?csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=F8rNta))
 <br>
 ## Objectives
 
